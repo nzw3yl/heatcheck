@@ -1,0 +1,14 @@
+<%- model_class = Partner -%>
+<div class="page-header">
+  <h1><%=@partner.name %> <br/><small> <%= @partner.description %></small></h1>
+</div>
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#">Current Issues</a>
+  </li>
+  <li><a href="#">Customers</a></li>
+  <li><a href="#">Heat Map</a></li>
+  <li><a href="#">Contacts</a></li>
+</ul>
+
+<%= render "issues/issues" %>

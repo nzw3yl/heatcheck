@@ -1,0 +1,4 @@
+$('#new_plan').remove();
+$('#new_link').show();
+$('#incomplete_plans').append('<%= j render(@plan) %>');
+$('#edit_plan_<%= @plan.id %>').submitOnCheck();

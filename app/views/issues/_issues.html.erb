@@ -1,0 +1,24 @@
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+	  <th>Temperature</th>
+	  <th>Issue </th>
+	  <th>Category</th>
+	  <th></th>
+    </tr>	
+  </thead>
+  <tbody>
+    <% @issues.each do |issue| %>
+     <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
+	  <td><%= simple_format temp_indicator(issue.temperature) %></td>
+	  <td><%= link_to(issue.content, [@issueable, issue, :plans]) %></td>
+	  <td><%= measure_name(issue.measure_id) %></td>
+	  <td><%= link_to issue, method: :delete, data: {confirm: "Are you sure?"}, remote: true, :class => "btn btn-mini btn-danger" do %>
+	    <i class=" icon-remove"></i>
+	  <% end %></td>
+     </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "New Issue", [:new, @issueable, :issue], id: "new_issue", remote: true, :class => "btn btn-info" %>

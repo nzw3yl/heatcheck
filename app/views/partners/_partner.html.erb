@@ -1,0 +1,30 @@
+<div class="row-fluid">	
+	<div class="well span4 alert<%= temp_status(partner.temperature) %>">	
+		<div>
+		  <strong>
+			<%if partner.temperature > 3 %>
+			  <i class=" icon-warning-sign icon-large"></i>
+			<% end %>
+		    <%= partner.name %>
+		  </strong>
+		</div>
+		<div><em><%= partner.description %></em></div>
+	    		<div class="actions">
+		          <%= link_to partner_path(partner), :class => 'btn btn-mini'  do %>
+			        <i class=" icon-eye-open icon-large"></i>
+			      <% end %> |
+				  <%= link_to new_partner_path(:parent_id => partner), :class => 'btn btn-mini'  do %>
+			        <i class=" icon-indent-right icon-large"></i>
+			      <% end %> |
+				  <%= link_to edit_partner_path(partner), :class => 'btn btn-mini' do %>
+				    <i class=" icon-edit icon-large"></i>
+				  <% end %> |
+			      <%= link_to partner_path(partner),
+			                  :method => :delete,
+			                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+			                  :class => 'btn btn-mini btn-danger' do %>
+			        <i class=" icon-remove icon-large"></i>
+			      <% end %>
+	           </div> 
+	  </div>
+</div>

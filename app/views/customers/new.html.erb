@@ -1,0 +1,6 @@
+<% if @customer.parent %>
+  
+  <%= render @customer.parent %>
+  Add a sub-company <br/>
+<% end %>
+<%= render 'form' %>

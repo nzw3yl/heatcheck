@@ -1,0 +1,8 @@
+<%- model_class = Issue -%>
+<div class="page-header">
+  <h2><%= @issueable.name %><br/>
+    <small>Issue: <%= @issue.content %></small>
+  </h2>
+</div>
+
+<%= render "plans/index", :locals => {:issue => @issue} %>

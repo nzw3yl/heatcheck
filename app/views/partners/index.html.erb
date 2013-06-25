@@ -1,0 +1,7 @@
+<%- model_class = Partner -%>
+<div class="page-header">
+<h1>Partners</h1>
+</div>
+<%= render 'form' %>
+<br/>
+<%= nested_partners @partners.arrange(:order => :name) %>

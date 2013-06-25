@@ -1,0 +1,17 @@
+
+<h1>
+	<%= @owner_name %>
+	<small><%= @issue.content %></small>
+</h1>
+
+<%= link_to "New Item", new_issue_plan_path(@issue), id: "new_link", remote: true, :class => "btn btn-info" %>
+
+<h3>Incomplete Action Items</h3>
+<div class="plans" id="incomplete_plans">
+  <%= render @incomplete_plans %>
+</div>
+
+<h3>Completed Action Items</h3>
+<div class="plans" id="complete_plans">
+  <%= render @complete_plans %>
+</div>

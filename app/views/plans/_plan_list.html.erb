@@ -1,0 +1,15 @@
+<h1>Action Plan</h1>
+
+<%= link_to "New Item", new_issue_plan_path(:issue), id: "new_link" %>
+
+<h2>Incomplete Action Items</h2>
+<div class="plans" id="incomplete_plans">
+  <%= render @incomplete_plans %>
+</div>
+
+<h2>Completed Action Items</h2>
+<div class="plans" id="complete_plans">
+  <%= render @complete_plans %>
+</div>
+
+<%= link_to 'New Plan', new_issue_plan_path(:issue) %>

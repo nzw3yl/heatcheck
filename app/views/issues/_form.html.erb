@@ -1,0 +1,18 @@
+<%= simple_form_for [@issueable, @issue] do |f| %>
+  <% if @issue.errors.any? %>
+    <div class="error_messages">
+      <h2>Please correct the following errors.</h2>
+      <ul>
+      <% @issue.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <%= f.input :content, :as => :text, :input_html => {:rows => 3 }, :label => false, :placeholder => "What's the issue?"%>
+    <%= f.input :temperature, as: :select, collection: [['Temperature?',0],['green',1],['yellow',2],['red',3],['inferno',4]], :input_html => {:class => "input-medium"}, :label => false %>
+    <%= f.association :measure, :label => false, :prompt => "Issue Category?" %>
+  <div class="actions">
+    <%= f.button :submit, "New Issue", :class => 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,11 +1,46 @@
 Heatcheck::Application.routes.draw do
+
+
+
+
+  resources :measures
+
+
+  resources :providers
+  
+  resources :partners, :shallow => true do
+    resources :issues do
+        resources :plans
+    end
+  end
+  
+  resources :partners do
+    resources :issues, :only => [:show]
+  end
+  
+  resources :customers, :shallow => true do
+    resources :issues do
+        resources :plans
+    end
+  end
+  
+  resources :customers do
+    resources :issues, :only => [:show]
+  end
+  
+  match "/customers/:customer_id/issues/:issue_id/plans" => "plans#index", :via => :get, :as => :customer_issue_plans
+  match "/partners/:partner_id/issues/:issue_id/plans" => "plans#index", :via => :get, :as => :partner_issue_plans
+
+  devise_for :users
+
+  root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
-
+ 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)

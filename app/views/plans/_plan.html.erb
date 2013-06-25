@@ -1,0 +1,9 @@
+
+<%= simple_form_for plan, :html => { :class => 'form-inline' }, remote: true  do |f| %>
+  <%= f.check_box :complete %>
+  <%= f.submit "Update" %>
+  <%= f.label :complete, plan.content %>
+  <%= link_to plan, method: :delete, data: {confirm: "Are you sure?"}, :issue_id => @issue.id, remote: true, :class => "btn btn-mini btn-danger" do %>
+    <i class=" icon-remove"></i>
+  <% end %>
+<% end %>

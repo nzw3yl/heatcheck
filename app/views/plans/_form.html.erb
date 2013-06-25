@@ -1,0 +1,18 @@
+<%= simple_form_for [@issue, @plan], :html => { :class => 'form-inline' }, remote: true  do |f| %>
+  <% if @plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
+
+      <ul>
+      <% @plan.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="controls controls-row">
+    <%= f.input_field :content, :placeholder => "New Action" %>
+    <%= f.input_field :contact_id, :placeholder => "Assigned To"  %>
+    <%= f.button :submit, "Assign", :class => "btn btn-success" %>
+  </div>
+<% end %>
