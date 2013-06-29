@@ -12,4 +12,7 @@ module CustomersHelper
       render(customer) + content_tag(:div, nested_customers(sub_customer), :class => "nested_items")
     end.join.html_safe
   end
+  
+
 end
+

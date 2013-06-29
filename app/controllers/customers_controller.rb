@@ -86,8 +86,15 @@ class CustomersController < ApplicationController
     end
   end
   
-  private 
-    def set_provider_id
-      
-    end
+  def show_heat
+    @customer = Customer.find(params[:id])
+  end
+  
+  def show_contacts
+    @customer = Customer.find(params[:id])
+    @contacts = @customer.contacts
+    @contactable = @customer
+  end
+
+
 end

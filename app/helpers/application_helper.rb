@@ -22,4 +22,34 @@ module ApplicationHelper
   def devise_mapping
      @devise_mapping ||= Devise.mappings[:user]
   end
+  
+  def temperature_to_integer(temp)
+    Integer(temp)
+    rescue Exception
+      0
+  end
+  
+  def temperature_button(temp, path = "#")
+    case(temp)
+       when 0
+         @btn_class = "btn btn-success btn-mini"
+         @icon_class = "icon-large icon-thumbs-up-alt"
+       when 1
+         @btn_class = "btn btn-success btn-mini"
+         @icon_class = "icon-large icon-thumbs-up-alt"
+       when 2
+         @btn_class = "btn btn-warning btn-mini"
+         @icon_class = "icon-large icon-flag-alt"
+       when 3
+         @btn_class = "btn btn-danger btn-mini"
+         @icon_class = "icon-large icon-flag-alt"
+       else
+         @btn_class = "btn btn-danger btn-mini"
+    		 @icon_class= "icon-warning-sign icon-large" 
+     end
+     link_to(path, :class => @btn_class) do
+       content_tag(:i, "", :class => @icon_class)
+     end 
+
+  end
 end

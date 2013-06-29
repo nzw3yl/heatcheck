@@ -1,9 +1,19 @@
-
-<%= simple_form_for plan, :html => { :class => 'form-inline' }, remote: true  do |f| %>
-  <%= f.check_box :complete %>
-  <%= f.submit "Update" %>
-  <%= f.label :complete, plan.content %>
+<tr id="action_row_<%= plan.id %>">
+  <td>
+  <%= simple_form_for plan, :html => { :class => 'form-inline' }, remote: true  do |f| %>
+    <%= f.check_box :complete %>
+    <%= f.submit "Update" %>
+  <% end %>
+  </td>
+  <td>
+	<%= plan.content %>
+  </td>
+  <td>
+  <%= Contact.find_by_id(plan.contact_id).try(:name) %>
+  </td>
+  <td>
   <%= link_to plan, method: :delete, data: {confirm: "Are you sure?"}, :issue_id => @issue.id, remote: true, :class => "btn btn-mini btn-danger" do %>
     <i class=" icon-remove"></i>
   <% end %>
-<% end %>
+  </td>
+</tr>

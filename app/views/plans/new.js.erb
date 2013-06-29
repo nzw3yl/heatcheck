@@ -1,1 +1,4 @@
 $('#new_link').hide().after('<%= j render("form") %>');
+$('#plan_contact_name').autocomplete({
+  source: $('#plan_contact_name').data('autocomplete-source')
+});

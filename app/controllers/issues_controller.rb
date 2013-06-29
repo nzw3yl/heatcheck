@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
   end
 
   def show
-    @issue = Issue.find(params[:id])
+    @issue = @issueable.issues.find(params[:id])
     
     respond_to do |format|
       format.html # show.html.erb
@@ -21,6 +21,25 @@ class IssuesController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @issue }
       format.js
+    end
+  end
+  
+  def edit
+    @issue = @issueable.issues.find(params[:id])
+  end
+  
+  def update
+    @issue = @issueable.issues.find(params[:id])
+    
+    respond_to do |format|
+      if @issue.update_attributes(params[:issue])
+        format.html { redirect_to @issueable, notice: 'Issue was successfully updated.' }
+        format.json { head :no_content }
+        format.js
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @issue.errors, status: :unprocessable_entity }
+      end
     end
   end
 

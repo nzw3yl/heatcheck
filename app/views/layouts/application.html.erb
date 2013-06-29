@@ -55,10 +55,6 @@
 		            <i class="icon-refresh icon-large"></i>
 		            <span class="hidden-phone">Partners</span>
 		          <% end %>
-	            <%= link_to root_path, :class => 'btn' do  %>
-		            <i class="icon-group icon-large"></i>
-		            <span class="hidden-phone">People</span>
-		          <% end %>
 		       	<%= link_to "/customers", :class => 'btn' do  %>
 		            <i class="icon-sitemap icon-large"></i>
 		            <span class="hidden-phone">Customers</span>
@@ -94,9 +90,10 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Companies", "/customers"  %></li>
+              <li><%= link_to "Customers", "/customers"  %></li>
               <li><%= link_to "Partners", "/partners"  %></li>
               <li><%= link_to "Measures", "/measures"  %></li>
+              <li><%= link_to "Set Heat",heat_maps_update_path  %></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

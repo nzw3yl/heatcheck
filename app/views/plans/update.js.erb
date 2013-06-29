@@ -1,6 +1,6 @@
 <% if @plan.complete? %>
-  $('#edit_plan_<%= @plan.id %>').appendTo('#complete_plans');
+  $('#action_row_<%= @plan.id %>').appendTo('#complete_plans');
 <% else %>
-  $('#edit_plan_<%= @plan.id %>').appendTo('#incomplete_plans');
+  $('#action_row_<%= @plan.id %>').appendTo('#incomplete_plans');
 <% end %>
 

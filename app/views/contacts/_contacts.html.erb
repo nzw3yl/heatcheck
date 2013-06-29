@@ -1,0 +1,4 @@
+<p><%= link_to "New Primary Contact", [:new, @contactable, :contact], :class => "btn btn-info" %></p>
+
+<%= nested_contacts @contacts.arrange %>
+

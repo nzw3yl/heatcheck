@@ -3,10 +3,17 @@ Heatcheck::Application.routes.draw do
 
 
 
+  resources :contacts
+
+
+  get "heat_maps/update"
+
   resources :measures
 
 
-  resources :providers
+  resources :providers do
+    resources :contacts
+  end
   
   resources :partners, :shallow => true do
     resources :issues do
@@ -15,22 +22,26 @@ Heatcheck::Application.routes.draw do
   end
   
   resources :partners do
-    resources :issues, :only => [:show]
+    resources :contacts
+    resources :issues, :only => [:show, :edit, :update]
   end
   
   resources :customers, :shallow => true do
     resources :issues do
         resources :plans
     end
+    get 'show_heat', :on => :member
+    get 'show_contacts', :on => :member
   end
   
   resources :customers do
-    resources :issues, :only => [:show]
+    resources :contacts
+    resources :issues, :only => [:show, :edit, :update]
   end
   
   match "/customers/:customer_id/issues/:issue_id/plans" => "plans#index", :via => :get, :as => :customer_issue_plans
   match "/partners/:partner_id/issues/:issue_id/plans" => "plans#index", :via => :get, :as => :partner_issue_plans
-
+  
   devise_for :users
 
   root :to => "home#index"

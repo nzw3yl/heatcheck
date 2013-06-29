@@ -3,6 +3,7 @@ class Partner < ActiveRecord::Base
   has_ancestry
   belongs_to :provider
   has_many :issues, as: :issueable
+  has_many :contacts, as: :contactable
   
   default_scope {where(provider_id: Provider.current_id)}
 end

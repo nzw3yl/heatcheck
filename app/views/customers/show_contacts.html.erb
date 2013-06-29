@@ -4,10 +4,10 @@
 </div>
 
 <ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#">Current Issues</a>
+  <li>
+    <a href=<%=customer_path(@customer)%>>Current Issues</a>
   </li>
   <li><a href=<%= show_heat_customer_path %>>Heat Map</a></li>
-  <li><a href=<%= show_contacts_customer_path %>>Contacts</a></li>
+  <li class="active"><a href="#">Contacts</a></li>
 </ul>
-<%= render "issues/issues" %>
+<%= render "contacts/contacts" %>

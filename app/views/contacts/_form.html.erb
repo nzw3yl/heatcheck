@@ -1,0 +1,28 @@
+<%= form_for [@contactable, @contact] do |f| %>
+  <% if @contact.errors.any? %>
+    	<div class="error_messages">
+	      <h2>Please correct the following errors.</h2>
+	      <ul>
+	      <% @contact.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :parent_id %>
+  </div>
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.text_field :team %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

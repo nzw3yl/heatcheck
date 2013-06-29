@@ -5,6 +5,7 @@ class Provider < ActiveRecord::Base
   has_many :partners
   has_many :measures
   cattr_accessor :current_id
+  has_many :contacts, as: :contactable
   
   
 end
