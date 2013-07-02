@@ -1,15 +1,13 @@
 Heatcheck::Application.routes.draw do
-
-
-
-
-  resources :contacts
-
-
+  require 'sidekiq/web'
+  
+  resources :issue_histories
+  resources :heat_logs
+#  resources :contacts
   get "heat_maps/update"
-
+  get "heat_maps/history"
+  
   resources :measures
-
 
   resources :providers do
     resources :contacts
@@ -19,6 +17,9 @@ Heatcheck::Application.routes.draw do
     resources :issues do
         resources :plans
     end
+    get 'show_heat', :on => :member
+    get 'show_contacts', :on => :member
+    get 'show_history', :on => :member
   end
   
   resources :partners do
@@ -32,6 +33,7 @@ Heatcheck::Application.routes.draw do
     end
     get 'show_heat', :on => :member
     get 'show_contacts', :on => :member
+    get 'show_history', :on => :member
   end
   
   resources :customers do
@@ -45,6 +47,10 @@ Heatcheck::Application.routes.draw do
   devise_for :users
 
   root :to => "home#index"
+  
+  authenticate :user do
+    mount Sidekiq::Web, at: '/heat_monitor'
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,6 +1,8 @@
 class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
+  before_filter :authenticate_user!
+  
   def index
     @customers = Customer.scoped
     @customer = Customer.new
@@ -95,6 +97,10 @@ class CustomersController < ApplicationController
     @contacts = @customer.contacts
     @contactable = @customer
   end
-
+ 
+  def show_history
+    @customer = Customer.find(params[:id])
+    @issue_histories = IssueHistory.where(['issueable_type = ? AND issueable_id = ?', "Customer", @customer.id]).order('close_date desc')
+  end
 
 end

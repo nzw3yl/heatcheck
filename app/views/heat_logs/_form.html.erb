@@ -1,0 +1,13 @@
+<%= simple_form_for @heat_log, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :transaction_date %>
+  <%= f.input :entity_type %>
+  <%= f.input :entity_id %>
+  <%= f.input :temperature %>
+  <%= f.input :measure_id %>
+  <%= f.input :provider_id %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                heat_logs_path, :class => 'btn' %>
+  </div>
+<% end %>

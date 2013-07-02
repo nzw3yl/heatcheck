@@ -52,4 +52,20 @@ module ApplicationHelper
      end 
 
   end
+  
+  def heat_map_history_value(entity_type, entity_id, weeks_back, measure)
+     @hmh = HeatHistory.where(['year = ? AND week = ? AND entity_type = ? AND entity_id = ?', DateTime.now.year, DateTime.now.cweek - weeks_back, entity_type, entity_id]).last
+     if @hmh
+       Integer(@hmh.send(measure)) 
+     else
+       1
+     end 
+  end
+  
+  def load_issueable
+    resource, id = request.path.split('/')[1,2]
+    @issueable_entity = resource.singularize.classify.constantize.find(id)
+    @issueable_class = resource.singularize.classify.constantize.to_s
+  end
+  
 end

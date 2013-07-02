@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   before_filter :load_issue
+  before_filter :authenticate_user!
   
   # GET /plans
   # GET /plans.json

@@ -1,5 +1,6 @@
 class IssuesController < ApplicationController
   before_filter :load_issueable
+  before_filter :authenticate_user!
   
   def index
     #@issueable = Customer.find(params[:customer_id])
@@ -33,6 +34,7 @@ class IssuesController < ApplicationController
     
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
+        Issue.log_temp_change(@issue, params[:action])
         format.html { redirect_to @issueable, notice: 'Issue was successfully updated.' }
         format.json { head :no_content }
         format.js
@@ -46,6 +48,7 @@ class IssuesController < ApplicationController
   def create
     @issue = @issueable.issues.new(params[:issue])
     if @issue.save
+      Issue.log_temp_change(@issue, params[:action])
       redirect_to @issueable, notice: "issue created."
     else
       render :new
@@ -54,8 +57,9 @@ class IssuesController < ApplicationController
   
   def destroy
      @issue = Issue.find(params[:id])
+     Issue.log_temp_change(@issue, params[:action])
      @issue.destroy
-
+     
      respond_to do |format|
        format.html
        format.json { head :no_content }

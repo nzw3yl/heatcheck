@@ -1,4 +1,5 @@
 class MeasuresController < ApplicationController
+  before_filter :authenticate_user!
   # GET /measures
   # GET /measures.json
   def index

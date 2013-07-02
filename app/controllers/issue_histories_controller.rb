@@ -1,0 +1,2 @@
+class IssueHistoriesController < ApplicationController
+end

@@ -1,0 +1,13 @@
+<%- model_class = Partner -%>
+<div class="page-header">
+  <h1><%=@partner.name %> <br/><small> <%= @partner.description %></small></h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li><a href=<%=partner_path(@partner)%>>Current Issues</a></li>
+  <li class="active"><a href="#">Heat Map</a></li>
+  <li><a href="#">Customers</a></li>
+  <li><a href=<%= show_contacts_partner_path %>>Contacts</a></li>
+  <li><a href=<%= show_history_partner_path %>>Issue History</a></li>
+</ul>
+<%= render 'heat_maps/heat_map', locals: {partner: @partner}%>

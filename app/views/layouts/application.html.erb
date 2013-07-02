@@ -75,6 +75,9 @@
 					  <li>
 						<%= link_to t(".edit_account"), edit_user_registration_path %>
 					  </li>
+					  <li><%= link_to "Measures", "/measures"  %></li>
+		              <li><%= link_to "Bring Heat",heat_maps_update_path  %></li>
+		              <li><%= link_to "ReGen History",heat_maps_history_path  %></li>
 					</ul>
 				  </li>
 			    <% end %>
@@ -92,11 +95,10 @@
               <li class="nav-header">Sidebar</li>
               <li><%= link_to "Customers", "/customers"  %></li>
               <li><%= link_to "Partners", "/partners"  %></li>
-              <li><%= link_to "Measures", "/measures"  %></li>
-              <li><%= link_to "Set Heat",heat_maps_update_path  %></li>
+
             </ul>
           </div><!--/.well -->
-        </div><!--/span-->
+       </div><!--/span-->
         <div class="span9">
           <%= bootstrap_flash %>
           <%= yield %>

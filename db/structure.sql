@@ -117,6 +117,115 @@ ALTER SEQUENCE customers_id_seq OWNED BY customers.id;
 
 
 --
+-- Name: heat_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE heat_histories (
+    id integer NOT NULL,
+    year integer,
+    week integer,
+    temperature hstore,
+    entity_id integer,
+    entity_type character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: heat_histories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE heat_histories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: heat_histories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE heat_histories_id_seq OWNED BY heat_histories.id;
+
+
+--
+-- Name: heat_logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE heat_logs (
+    id integer NOT NULL,
+    transaction_date date,
+    entity_type character varying(255),
+    entity_id integer,
+    temperature integer,
+    measure_id integer,
+    provider_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: heat_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE heat_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: heat_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE heat_logs_id_seq OWNED BY heat_logs.id;
+
+
+--
+-- Name: issue_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE issue_histories (
+    id integer NOT NULL,
+    close_date date,
+    issue_id character varying(255),
+    content character varying(255),
+    measure character varying(255),
+    temperature integer,
+    issueable_id integer,
+    issueable_type character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    provider_id integer
+);
+
+
+--
+-- Name: issue_histories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE issue_histories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: issue_histories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE issue_histories_id_seq OWNED BY issue_histories.id;
+
+
+--
 -- Name: issues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -129,7 +238,8 @@ CREATE TABLE issues (
     updated_at timestamp without time zone NOT NULL,
     temperature integer DEFAULT 0,
     auto_temp boolean DEFAULT true,
-    measure_id integer
+    measure_id integer,
+    provider_id integer
 );
 
 
@@ -199,7 +309,8 @@ CREATE TABLE partners (
     ancestry character varying(255),
     provider_id integer,
     temperature integer DEFAULT 0,
-    auto_temp boolean DEFAULT true
+    auto_temp boolean DEFAULT true,
+    current_heatmap hstore
 );
 
 
@@ -356,6 +467,27 @@ ALTER TABLE customers ALTER COLUMN id SET DEFAULT nextval('customers_id_seq'::re
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE heat_histories ALTER COLUMN id SET DEFAULT nextval('heat_histories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE heat_logs ALTER COLUMN id SET DEFAULT nextval('heat_logs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE issue_histories ALTER COLUMN id SET DEFAULT nextval('issue_histories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE issues ALTER COLUMN id SET DEFAULT nextval('issues_id_seq'::regclass);
 
 
@@ -408,6 +540,30 @@ ALTER TABLE ONLY contacts
 
 ALTER TABLE ONLY customers
     ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: heat_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY heat_histories
+    ADD CONSTRAINT heat_histories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: heat_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY heat_logs
+    ADD CONSTRAINT heat_logs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: issue_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY issue_histories
+    ADD CONSTRAINT issue_histories_pkey PRIMARY KEY (id);
 
 
 --
@@ -466,6 +622,13 @@ CREATE INDEX customers_current_heatmap ON customers USING gin (current_heatmap);
 
 
 --
+-- Name: heat_histories_temperature; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX heat_histories_temperature ON heat_histories USING gin (temperature);
+
+
+--
 -- Name: index_contacts_on_ancestry; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -501,6 +664,34 @@ CREATE INDEX index_customers_on_provider_id ON customers USING btree (provider_i
 
 
 --
+-- Name: index_heat_logs_on_entity_id_and_entity_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_heat_logs_on_entity_id_and_entity_type ON heat_logs USING btree (entity_id, entity_type);
+
+
+--
+-- Name: index_heat_logs_on_measure_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_heat_logs_on_measure_id ON heat_logs USING btree (measure_id);
+
+
+--
+-- Name: index_heat_logs_on_transaction_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_heat_logs_on_transaction_date ON heat_logs USING btree (transaction_date);
+
+
+--
+-- Name: index_issue_histories_on_provider_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_issue_histories_on_provider_id ON issue_histories USING btree (provider_id);
+
+
+--
 -- Name: index_issues_on_issueable_id_and_issueable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -512,6 +703,13 @@ CREATE INDEX index_issues_on_issueable_id_and_issueable_type ON issues USING btr
 --
 
 CREATE INDEX index_issues_on_measure_id ON issues USING btree (measure_id);
+
+
+--
+-- Name: index_issues_on_provider_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_issues_on_provider_id ON issues USING btree (provider_id);
 
 
 --
@@ -554,6 +752,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: partners_current_heatmap; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX partners_current_heatmap ON partners USING gin (current_heatmap);
 
 
 --
@@ -608,3 +813,19 @@ INSERT INTO schema_migrations (version) VALUES ('20130625005819');
 INSERT INTO schema_migrations (version) VALUES ('20130628013658');
 
 INSERT INTO schema_migrations (version) VALUES ('20130629164314');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630010458');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630143949');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630150326');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630150622');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630180632');
+
+INSERT INTO schema_migrations (version) VALUES ('20130630180920');
+
+INSERT INTO schema_migrations (version) VALUES ('20130702020132');
+
+INSERT INTO schema_migrations (version) VALUES ('20130702020233');

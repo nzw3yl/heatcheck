@@ -1,0 +1,6 @@
+$('#heat_logs').append('<%= j render(@heat_logs) %>');
+<% if @heat_logs.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@heat_logs) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>

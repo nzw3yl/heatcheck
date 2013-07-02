@@ -1,4 +1,5 @@
 class PartnersController < ApplicationController
+  before_filter :authenticate_user!
   # GET /partners
   # GET /partners.json
   def index
@@ -85,4 +86,20 @@ class PartnersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def show_heat
+     @partner = Partner.find(params[:id])
+   end
+
+   def show_contacts
+     @partner = Partner.find(params[:id])
+     @partners = @partner.contacts
+     @contactable = @partner
+   end
+
+   def show_history
+     @partner = Partner.find(params[:id])
+     @issue_histories = IssueHistory.where(['issueable_type = ? AND issueable_id = ?', "Partner", @partner.id]).order('close_date desc')
+   end
+  
 end

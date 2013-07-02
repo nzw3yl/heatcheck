@@ -1,0 +1,23 @@
+<% load_issueable %>
+<h3>Heat Map</h3>
+<table class="table table-bordered">
+  <thead>
+	<th>Measure</th>
+	<th>Current</th>
+	<% (1..10).each do |i| %>
+	  <th><%= start_of_weeks_back_date(i) %></th>
+	<% end %>
+  </thead>
+  <tbody>
+	<% Measure.all.each do |measure| %>
+	<% @temp_value = temperature_to_integer(@issueable_entity.send(measure.content.downcase))%>
+	<tr>
+	  <td><%= measure.content %></td>
+	  <td><%= temperature_button(@temp_value) %></td>
+	  <% (1..10).each do |j| %>
+	    <td><%= temperature_button(heat_map_history_value(@issueable_class, @issueable_entity.id, j,measure.content)) %></td>
+	  <% end %>
+	</tr>
+	<% end %>
+  <tbody>
+</table>

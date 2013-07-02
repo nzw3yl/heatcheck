@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
     before_filter :load_contactable
-
+    before_filter :authenticate_user!
+    
     def index
       @contacts = @contactable.contacts
     end

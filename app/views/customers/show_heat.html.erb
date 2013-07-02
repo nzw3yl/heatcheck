@@ -7,20 +7,6 @@
   <li><a href=<%=customer_path(@customer)%>>Current Issues</a></li>
   <li class="active"><a href="#">Heat Map</a></li>
   <li><a href=<%= show_contacts_customer_path %>>Contacts</a></li>
+  <li><a href=<%= show_history_customer_path %>>Issue History</a></li>
 </ul>
-<h3>Heat Map</h3>
-<table class="table table-striped">
-  <thead>
-	<th>Measure</th>
-	<th>Temperature</th>
-  </thead>
-  <tbody>
-	<% Measure.all.each do |measure| %>
-	<% @temp_value = temperature_to_integer(@customer.send(measure.content.downcase))%>
-	<tr>
-	  <td><%= measure.content %></td>
-	  <td><%= temperature_button(@temp_value) %>
-	</tr>
-	<% end %>
-  <tbody>
-</table>
+<%= render 'heat_maps/heat_map', locals: {customer: @customer}%>

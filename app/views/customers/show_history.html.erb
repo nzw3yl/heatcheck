@@ -1,0 +1,14 @@
+<%- model_class = Customer -%>
+<div class="page-header">
+  <h1><%=@customer.name %> <br/><small> <%= @customer.description %></small></h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li>
+    <a href=<%=customer_path(@customer)%>>Current Issues</a>
+  </li>
+  <li><a href=<%= show_heat_customer_path %>>Heat Map</a></li>
+  <li><a href=<%= show_contacts_customer_path %>>Contacts</a></li>
+  <li class="active"><a href="#">Issue History</a></li>
+</ul>
+<%= render "issue_histories/issue_histories" %>

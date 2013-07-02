@@ -1,0 +1,22 @@
+<%- model_class = HeatLog -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:transaction_date) %></th>
+      <th><%= model_class.human_attribute_name(:entity_type) %></th>
+      <th><%= model_class.human_attribute_name(:entity_id) %></th>
+      <th><%= model_class.human_attribute_name(:temperature) %></th>
+      <th><%= model_class.human_attribute_name(:measure_id) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody id="heat_logs">
+ <%= render @heat_logs %>
+  </tbody>
+</table>
+
+<%= will_paginate @heat_logs %>

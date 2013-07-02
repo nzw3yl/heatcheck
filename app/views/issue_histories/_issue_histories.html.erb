@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+	  <th>Close Date</th>
+	  <th>Temperature</th>
+	  <th>Issue </th>
+	  <th>Category</th>
+    </tr>	
+  </thead>
+  <tbody>
+    <% @issue_histories.each do |issue| %>
+     <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
+	  <td><%= issue.close_date %></td>
+	  <td><%= temperature_button(issue.temperature) %></td>
+	  <td><%= issue.content %></td>
+	  <td><%= issue.measure %></td>
+     </tr>
+    <% end %>
+  </tbody>
+</table>

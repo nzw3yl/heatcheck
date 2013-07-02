@@ -16,7 +16,7 @@ module Heatcheck
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/app/models/concerns)
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")

@@ -13,6 +13,8 @@ module CustomersHelper
     end.join.html_safe
   end
   
-
+  def start_of_weeks_back_date(num)
+    Date.commercial(Date.today.year,Date.today.cweek - num,1).month.to_s + "/" + Date.commercial(Date.today.year,Date.today.cweek - num,1).day.to_s
+  end
 end
 
