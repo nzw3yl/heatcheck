@@ -10,7 +10,7 @@
   </thead>
   <tbody>
 	<% Measure.all.each do |measure| %>
-	<% @temp_value = temperature_to_integer(@issueable_entity.send(measure.content.downcase))%>
+	<% @temp_value = temperature_to_integer(@issueable_entity.send(attributize(measure.content)))%>
 	<tr>
 	  <td><%= measure.content %></td>
 	  <td><%= temperature_button(@temp_value) %></td>

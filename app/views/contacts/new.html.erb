@@ -1,7 +1,8 @@
 
-<h1>New contact</h1>
-
-<%= render @contact.parent if @contact.parent %>
-
+<h3>Add a new contact</h3>
+<% if @contact.parent %>
+  <%= render @contact.parent %>
+<p>Add a direct report...</p>
+<% end %>
 <%= render 'form'%>
 

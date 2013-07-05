@@ -12,9 +12,11 @@
     <% @issues.each do |issue| %>
      <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
 	  <td><%= temperature_button(issue.temperature, [@issueable, issue, :plans]) %></td>
-	  <td><%= link_to(issue.content, [:edit, @issueable, issue]) %></td>
+	  <td><%= link_to(issue.content,  [@issueable, issue, :plans]) %></td>
 	  <td><%= measure_name(issue.measure_id) %></td>
-	  <td><%= link_to issue, method: :delete, data: {confirm: "Are you sure?"}, remote: true, :class => "btn btn-mini btn-danger" do %>
+	  <td>  <%= link_to [:edit, @issueable, issue], :class => 'btn btn-mini' do %>
+		   <i class=" icon-edit icon-large"></i>
+	    <% end %>|<%= link_to issue, method: :delete, data: {confirm: "Are you sure?"}, remote: true, :class => "btn btn-mini btn-danger" do %>
 	    <i class=" icon-remove"></i>
 	  <% end %></td>
      </tr>

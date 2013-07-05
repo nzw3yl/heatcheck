@@ -12,7 +12,7 @@
   <tbody>
     <% @measures.each do |measure| %>
       <tr>
-        <td><%= link_to measure.content, measure_path(measure) %></td>
+        <td><%= link_to measure.content.humanize, measure_path(measure) %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_measure_path(measure), :class => 'btn btn-mini' %>

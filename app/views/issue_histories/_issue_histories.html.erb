@@ -12,7 +12,7 @@
      <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
 	  <td><%= issue.close_date %></td>
 	  <td><%= temperature_button(issue.temperature) %></td>
-	  <td><%= issue.content %></td>
+	  <td><%= issue.content.humanize %></td>
 	  <td><%= issue.measure %></td>
      </tr>
     <% end %>

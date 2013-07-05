@@ -3,12 +3,16 @@ class PartnersController < ApplicationController
   # GET /partners
   # GET /partners.json
   def index
-    @partners = Partner.scoped
+    if params[:term]
+      @partners = Partner.scoped.order(:name).where("name ILIKE ?", "%#{params[:term]}%")
+    else
+      @partners = Partner.scoped
+    end
     @partner = Partner.new
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @partners }
+      format.json { render json: @partners.map(&:name) }
     end
   end
 
@@ -29,12 +33,13 @@ class PartnersController < ApplicationController
   # GET /partners/new
   # GET /partners/new.json
   def new
-    @parent_id = params[:parent_id] || default_parent.id
+    @parent_id = params[:parent_id] #|| default_parent.id
     @partner = Partner.new
     @partner.parent_id = @parent_id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @partner }
+      format.js
     end
   end
 

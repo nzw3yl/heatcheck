@@ -89,25 +89,14 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Customers", "/customers"  %></li>
-              <li><%= link_to "Partners", "/partners"  %></li>
-
-            </ul>
-          </div><!--/.well -->
-       </div><!--/span-->
+        <%= render 'layouts/side_navigation' if user_signed_in? %>
         <div class="span9">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
       </div><!--/row-->
 
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
+        <%= render 'layouts/footer' %>
 
     </div> <!-- /container -->
 

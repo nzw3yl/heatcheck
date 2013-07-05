@@ -2,7 +2,7 @@ class Plan < ActiveRecord::Base
   belongs_to :issue
   belongs_to :contact
   attr_accessible :complete, :contact_id, :content, :contact_name
-  
+  counter_culture [:issue, :provider]
   def contact_name
     contact.try(:name)
   end

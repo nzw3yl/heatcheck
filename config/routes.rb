@@ -1,4 +1,7 @@
 Heatcheck::Application.routes.draw do
+  resources :contracts
+
+
   require 'sidekiq/web'
   
   resources :issue_histories

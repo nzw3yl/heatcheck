@@ -1,13 +1,9 @@
 
-<%= simple_form_for @partner, :html => { :class => 'form-horizontal' } do |f| %>
- <div class="control-group">
-	<div class="controls">
+<%= simple_form_for @partner do |f| %>
   		<%= f.input :name %>
 		  <%= f.input :description %>
-		  <%= f.input :temperature, as: :select, collection: [['unknown',0],['green',1],['yellow',2],['red',3],['inferno',4]], :input_html => {:class => "input-small"} %>
+		  <%= f.input :temperature, as: :select, collection: [['unknown',0],['green',1],['yellow',2],['red',3],['inferno',4]], :input_html => {:class => "input-medium"} %>
 		  <%= f.input :auto_temp, :label => "Automatic Calculation" %>
-	</div>
-  </div>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

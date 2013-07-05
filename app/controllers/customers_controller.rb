@@ -4,11 +4,15 @@ class CustomersController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @customers = Customer.scoped
+    if params[:term]
+      @customers = Customer.scoped.order(:name).where("name ILIKE ?", "%#{params[:term]}%")
+    else
+      @customers = Customer.scoped
+    end
     @customer = Customer.new
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @customers }
+      format.json { render json: @customers.map(&:name) }
     end
   end
 
@@ -29,13 +33,14 @@ class CustomersController < ApplicationController
   # GET /customers/new
   # GET /customers/new.json
   def new
-    @parent_id = params[:parent_id] || default_parent.id
+    @parent_id = params[:parent_id] #|| default_parent.id
     @customer = Customer.new
     @customer.parent_id = @parent_id
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer }
+      format.js
     end
   end
 

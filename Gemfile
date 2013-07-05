@@ -22,6 +22,7 @@ group :assets do
   gem 'twitter-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-ui-rails'
+  gem 'chosen-rails'
 end
 
 gem 'jquery-rails'
@@ -73,3 +74,4 @@ gem "will_paginate"
 gem "sidekiq"
 gem "sinatra", require: false
 gem "slim"
+gem 'counter_culture', '~> 0.1.7'

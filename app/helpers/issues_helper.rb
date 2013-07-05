@@ -1,7 +1,7 @@
 module IssuesHelper
   def measure_name(id)
     @measure = Measure.find_by_id(id)
-    @measure.nil? ? "unknown" : @measure.content
+    @measure.nil? ? "unknown" : @measure.content.humanize
   end
   
   def temp_indicator(temp)

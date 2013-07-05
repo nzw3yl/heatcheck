@@ -19,7 +19,14 @@ class ApplicationController < ActionController::Base
     Provider.current_id = nil
   end
   
-  
+  def default_parent
+    if current_provider
+      Partner.where(:provider_id => current_provider.id).first_or_create(:name => current_provider.name)
+    else
+      return nil
+    end
+  end
+  helper_method :default_parent
   
   def temp_status(temp)
     case(temp)

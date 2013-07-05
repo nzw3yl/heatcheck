@@ -1,0 +1,12 @@
+<%= form_for @contract do |f| %>
+  <%= f.select :partner_id, options_for_select(Partner.all.collect{ |u| [u.name, u.id] }), :prompt => "Select Partner" %> for
+  <%= f.select :customer_id, options_for_select(Customer.all.collect{ |u| [u.name, u.id] }), :prompt => "Select Customer" %><br/><br/>
+  <%= f.text_field :start_date, :placeholder => "Start Date" %> to&nbsp; 
+  <%= f.text_field :expiry_date, :placeholder => "Expiry Date" %><br/>
+  <%= f.text_area :notes, size: "60x5", placeholder: "Contract Notes" %>
+  <div class="form-actions">
+    <%= f.submit :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                contracts_path, :class => 'btn' %>
+  </div>
+<% end %>

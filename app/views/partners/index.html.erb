@@ -1,7 +1,7 @@
 <%- model_class = Partner -%>
-<div class="page-header">
-<h1>Partners</h1>
+<div>
+<h3>Partners</h3>
 </div>
-<%= render 'form' %>
+<p><%= link_to "New Partner", new_partner_path, id: "new_partner", remote: true, class: "btn btn-success" %></p>
 <br/>
 <%= nested_partners @partners.arrange(:order => :name) %>

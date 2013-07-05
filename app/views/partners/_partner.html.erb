@@ -13,7 +13,7 @@
 	        <i class=" icon-eye-open icon-large"></i>
 	      <% end %> |
 		<%= link_to new_partner_path(:parent_id => partner), :class => "btn btn-mini" do %>
-		   <i class=" icon-sort-by-attributes-alt"></i>
+		   <i class=" icon-plus icon-large"></i>
 		<% end %>	|
 	    <%= link_to edit_partner_path(partner), :class => 'btn btn-mini' do %>
 		   <i class=" icon-edit icon-large"></i>
@@ -21,8 +21,8 @@
 	      <%= link_to partner_path(partner),
 	                  :method => :delete,
 	                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-	                  :class => 'btn btn-mini btn-danger' do %>
-	        <i class=" icon-remove icon-large"></i>
+	                  :class => 'btn btn-mini' do %>
+	        <i class=" icon-remove-sign icon-large"></i>
 	      <% end %>
     </span>
 

@@ -80,6 +80,42 @@ ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
 
 
 --
+-- Name: contracts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contracts (
+    id integer NOT NULL,
+    partner_id integer,
+    customer_id integer,
+    expiry_date date,
+    start_date date,
+    notes text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    provider_id integer
+);
+
+
+--
+-- Name: contracts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE contracts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contracts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE contracts_id_seq OWNED BY contracts.id;
+
+
+--
 -- Name: customers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -376,7 +412,11 @@ CREATE TABLE providers (
     name character varying(255),
     description character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    customers_count integer DEFAULT 0 NOT NULL,
+    partners_count integer DEFAULT 0 NOT NULL,
+    issues_count integer DEFAULT 0 NOT NULL,
+    plans_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -460,6 +500,13 @@ ALTER TABLE contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE contracts ALTER COLUMN id SET DEFAULT nextval('contracts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE customers ALTER COLUMN id SET DEFAULT nextval('customers_id_seq'::regclass);
 
 
@@ -532,6 +579,14 @@ ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contracts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY contracts
+    ADD CONSTRAINT contracts_pkey PRIMARY KEY (id);
 
 
 --
@@ -647,6 +702,27 @@ CREATE INDEX index_contacts_on_contactable_id_and_contactable_type ON contacts U
 --
 
 CREATE INDEX index_contacts_on_provider_id ON contacts USING btree (provider_id);
+
+
+--
+-- Name: index_contracts_on_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contracts_on_customer_id ON contracts USING btree (customer_id);
+
+
+--
+-- Name: index_contracts_on_partner_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contracts_on_partner_id ON contracts USING btree (partner_id);
+
+
+--
+-- Name: index_contracts_on_provider_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contracts_on_provider_id ON contracts USING btree (provider_id);
 
 
 --
@@ -829,3 +905,9 @@ INSERT INTO schema_migrations (version) VALUES ('20130630180920');
 INSERT INTO schema_migrations (version) VALUES ('20130702020132');
 
 INSERT INTO schema_migrations (version) VALUES ('20130702020233');
+
+INSERT INTO schema_migrations (version) VALUES ('20130703013137');
+
+INSERT INTO schema_migrations (version) VALUES ('20130705162429');
+
+INSERT INTO schema_migrations (version) VALUES ('20130705165907');

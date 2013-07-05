@@ -2,9 +2,11 @@ class Issue < ActiveRecord::Base
   attr_accessible :content, :temperature, :measure_id
   belongs_to :issuable, polymorphic: true
   belongs_to :measure
+  belongs_to :provider
   has_many :plans
   before_destroy :add_history
   default_scope {where(provider_id: Provider.current_id)}
+  counter_culture :provider
   
   include Logging
   

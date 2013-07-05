@@ -10,6 +10,9 @@ module ApplicationHelper
     HTML
     html.html_safe
   end
+  def attributize(string)
+    string.downcase.tr(" ","_")
+  end
   
   def resource_name
      :user
@@ -56,7 +59,7 @@ module ApplicationHelper
   def heat_map_history_value(entity_type, entity_id, weeks_back, measure)
      @hmh = HeatHistory.where(['year = ? AND week = ? AND entity_type = ? AND entity_id = ?', DateTime.now.year, DateTime.now.cweek - weeks_back, entity_type, entity_id]).last
      if @hmh
-       Integer(@hmh.send(measure)) 
+       Integer(@hmh.send(attributize(measure)) || 1) 
      else
        1
      end 
