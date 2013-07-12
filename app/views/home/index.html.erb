@@ -1,8 +1,12 @@
 
 	<div class="hero-unit">  
 	    <h1>HeatCheck <br/><small>Is it hot in here?</small></h1>  
-	    <p></p>
-	    <p><a class="btn btn-danger btn-large">View Heat Map</a></p>  
+	    <p>
+	    	<%= form_tag show_map_partners_path, method: "get"  do %>
+			  <%= select_tag :id, options_for_select(Partner.all.collect{ |u| [u.name, u.id] }), :prompt => "Select Partner" %><br/><br/>
+			  <%= submit_tag "View Heat Map", :class => 'btn btn-danger btn-large' %>
+			<% end %>
+	    </p>
 	  </div>   
 	  <div class="row-fluid"> 
 		<div class="span4">  

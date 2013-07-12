@@ -1,6 +1,6 @@
 class Customer < ActiveRecord::Base
   serialize :current_heatmap, ActiveRecord::Coders::Hstore
-  attr_accessible :description, :name, :parent_id, :temperature, :auto_temp, :partner_ids
+  attr_accessible :description, :name, :parent_id, :temperature, :auto_temp, :partner_ids, :short_name
   
   has_ancestry
   belongs_to :provider
@@ -9,6 +9,8 @@ class Customer < ActiveRecord::Base
   has_many :contracts #watch the 'r'!
   has_many :partners, through: :contracts 
   counter_culture :provider
+  
+  validates :short_name, length: { in: 2..4 }, on: :update
  
   
   default_scope {where(provider_id: Provider.current_id)}

@@ -35,58 +35,8 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
-
-    <div class="navbar navbar-fluid-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-
-          <a class="brand" href="/">
-	         <span class="hidden-phone">Heatcheck</span>
-	         <span class="visible-phone"><i class="icon-fire icon-large"></i></span>
-	      </a>
-          <div class="container-fluid">
-	        <ul class="nav nav-pills">
-		      <% if !user_signed_in? %>
-	            <li><%= link_to "About", "#"  %></li>
-	            <li><%= link_to "Contact Us", "#"  %></li>
-	            <li><%= link_to "Help", "#"  %></li>
-	          <% else %>
-	            <%= link_to "/partners", :class => 'btn' do  %>
-		            <i class="icon-refresh icon-large"></i>
-		            <span class="hidden-phone">Partners</span>
-		          <% end %>
-		       	<%= link_to "/customers", :class => 'btn' do  %>
-		            <i class="icon-sitemap icon-large"></i>
-		            <span class="hidden-phone">Customers</span>
-		          <% end %>
-	          <% end %>
-	        </ul>
-            <ul class="nav pull-right">
-			    <% if user_signed_in? %>
-			      <li class="dropdown">
-				    <a class="dropdown-toggle", data-toggle="dropdown", data-target="#", href="#">
-					  <span class="icon-cog icon-large"></span>
-					  <b class="caret"></b>  
-					</a>
-					<ul class="dropdown-menu">
-					  <li>
-						<%= link_to t(".logout"), destroy_user_session_path, :method=>'delete'%>
-					  </li>
-					  <li>
-						<%= link_to t(".edit_account"), edit_user_registration_path %>
-					  </li>
-					  <li><%= link_to "Measures", "/measures"  %></li>
-		              <li><%= link_to "Bring Heat",heat_maps_update_path  %></li>
-		              <li><%= link_to "ReGen History",heat_maps_history_path  %></li>
-					</ul>
-				  </li>
-			    <% end %>
-			  </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
+    <%= render 'layouts/header' %>
+    
     <div class="container-fluid">
       <div class="row-fluid">
         <%= render 'layouts/side_navigation' if user_signed_in? %>

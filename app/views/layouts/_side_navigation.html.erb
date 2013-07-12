@@ -5,13 +5,14 @@
 	  </li>
       <li><%= link_to "Customers (" + current_provider.customers_count.to_s + ")", "/customers"  %></li>
       <li><%= link_to "Partners (" + current_provider.partners_count.to_s + ")", "/partners"  %></li>
+      <li><%= link_to "Contracts (" + current_provider.contracts_count.to_s + ")", "/contracts"  %></li>
     </ul>
   </div><!--/.well -->
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
       <li class="nav-header">Summary</li>
-      <li><%= link_to "Issues (" + current_provider.issues_count.to_s + ")", "#"  %></li>
-      <li><%= link_to "Incomplete Actions (" + current_provider.plans_count.to_s + ")", "#"  %></li>
+      <li><%= link_to "Issues (" + current_provider.issues_count.to_s + ")", issues_provider_path(current_provider)  %></li>
+      <li><%= link_to "Incomplete Actions (" + current_provider.plans_count.to_s + ")", plans_provider_path(current_provider)  %></li>
     </ul>
   </div><!--/.well -->
 </div><!--/span-->

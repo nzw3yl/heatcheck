@@ -5,17 +5,27 @@
 	<th>Measure</th>
 	<th>Current</th>
 	<% (1..10).each do |i| %>
-	  <th><%= start_of_weeks_back_date(i) %></th>
+	  <th><div class="text-center"><%= start_of_weeks_back_date(i) %></div></th>
 	<% end %>
   </thead>
   <tbody>
 	<% Measure.all.each do |measure| %>
 	<% @temp_value = temperature_to_integer(@issueable_entity.send(attributize(measure.content)))%>
 	<tr>
-	  <td><%= measure.content %></td>
-	  <td><%= temperature_button(@temp_value) %></td>
+	  <td>
+		  <%= measure.content %>
+	  </td>
+	  <td>
+		<div class="text-center">
+	      <%= temperature_button(@temp_value) %>
+	    </div>
+	  </td>
 	  <% (1..10).each do |j| %>
-	    <td><%= temperature_button(heat_map_history_value(@issueable_class, @issueable_entity.id, j,measure.content)) %></td>
+	    <td>
+	      <div class="text-center">
+	        <%= temperature_button(heat_map_history_value(@issueable_class, @issueable_entity.id, j,measure.content)) %>
+	      </div>
+	    </td>
 	  <% end %>
 	</tr>
 	<% end %>

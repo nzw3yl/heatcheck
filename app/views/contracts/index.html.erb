@@ -5,7 +5,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:partner_id) %></th>
       <th><%= model_class.human_attribute_name(:customer_id) %></th>
       <th><%= model_class.human_attribute_name(:start_date) %></th>
@@ -17,7 +16,6 @@
   <tbody>
     <% @contracts.each do |contract| %>
       <tr>
-        <td><%= link_to contract.id, contract_path(contract) %></td>
         <td><%= Partner.find_by_id(contract.partner_id).try(:name)%></td>
         <td><%= Customer.find_by_id(contract.customer_id).try(:name) %></td>
         <td><%= contract.start_date %></td>

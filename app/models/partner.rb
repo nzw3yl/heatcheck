@@ -1,4 +1,5 @@
 class Partner < ActiveRecord::Base
+  serialize :current_heatmap, ActiveRecord::Coders::Hstore
   attr_accessible :description, :name, :parent_id, :temperature, :auto_temp, :customer_ids
   has_ancestry
   belongs_to :provider

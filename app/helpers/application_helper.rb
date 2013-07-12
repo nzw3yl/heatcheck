@@ -32,11 +32,15 @@ module ApplicationHelper
       0
   end
   
+  def numeric?(object)
+    true if Float(object) rescue false
+  end
+  
   def temperature_button(temp, path = "#")
+    if numeric?(temp)
+       temp = Integer(temp) 
+     end  
     case(temp)
-       when 0
-         @btn_class = "btn btn-success btn-mini"
-         @icon_class = "icon-large icon-thumbs-up-alt"
        when 1
          @btn_class = "btn btn-success btn-mini"
          @icon_class = "icon-large icon-thumbs-up-alt"
@@ -46,9 +50,12 @@ module ApplicationHelper
        when 3
          @btn_class = "btn btn-danger btn-mini"
          @icon_class = "icon-large icon-flag-alt"
-       else
+       when 4
          @btn_class = "btn btn-danger btn-mini"
-    		 @icon_class= "icon-warning-sign icon-large" 
+         @icon_class = "icon-large icon-warning-sign"
+       else
+         @btn_class = "btn btn-success btn-mini"
+    		 @icon_class= "icon-question-sign icon-large" 
      end
      link_to(path, :class => @btn_class) do
        content_tag(:i, "", :class => @icon_class)
@@ -70,5 +77,5 @@ module ApplicationHelper
     @issueable_entity = resource.singularize.classify.constantize.find(id)
     @issueable_class = resource.singularize.classify.constantize.to_s
   end
-  
+ 
 end

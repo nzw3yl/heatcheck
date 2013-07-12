@@ -3,7 +3,7 @@ class Issue < ActiveRecord::Base
   belongs_to :issuable, polymorphic: true
   belongs_to :measure
   belongs_to :provider
-  has_many :plans
+  has_many :plans, dependent: :destroy
   before_destroy :add_history
   default_scope {where(provider_id: Provider.current_id)}
   counter_culture :provider

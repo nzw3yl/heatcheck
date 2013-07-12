@@ -4,6 +4,7 @@ class Provider < ActiveRecord::Base
   has_many :customers
   has_many :partners
   has_many :measures
+  has_many :issues
   cattr_accessor :current_id
   has_many :contacts, as: :contactable
   

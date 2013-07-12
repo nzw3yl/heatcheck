@@ -1,0 +1,36 @@
+
+<h3>Heat Map for: <%= @partner.name %> [ <%= temperature_button(@partner.temperature)%> ]</h3>
+<table class="table table-bordered table-condensed">
+  <thead>
+	<th class="tight-measure">Measure</th>
+	<th class="tight-table">Overall</th>
+	<% @customers.each do |customer|%>
+	  <th class="tight-table">
+		<div class="text-center">
+	      <%= customer.short_name %>
+	    </div>
+	  </th>
+	<% end %>
+	<th></th>
+  </thead>
+  <tbody>
+	<% Measure.all.each do |measure| %>
+	<tr>
+	  <td><%= measure.content %></td>
+	  <td class="heat-map">
+	    <div class="text-center">
+	      <%= temperature_button(@partner.send("#{attributize(measure.content.downcase)}"))%>
+	    </div>
+	  </td>
+	  <% @customers.each do |customer| %>
+	    <td class="heat-map">
+		  <div class="text-center">
+	      <%= temperature_button(customer.send("#{attributize(measure.content.downcase)}")) %>
+	      </div>
+	    </td>
+	  <% end %>
+	  <td></td>
+	</tr>
+	<% end %>
+  <tbody>
+</table>

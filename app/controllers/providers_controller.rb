@@ -14,7 +14,7 @@ class ProvidersController < ApplicationController
   # GET /providers/1
   # GET /providers/1.json
   def show
-    @provider = Provider.find(params[:id])
+    @provider = current_provider #Provider.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,7 +35,7 @@ class ProvidersController < ApplicationController
 
   # GET /providers/1/edit
   def edit
-    @provider = Provider.find(params[:id])
+    @provider = current_provider #Provider.find(params[:id])
   end
 
   # POST /providers
@@ -57,7 +57,7 @@ class ProvidersController < ApplicationController
   # PUT /providers/1
   # PUT /providers/1.json
   def update
-    @provider = Provider.find(params[:id])
+    @provider = current_provider # Provider.find(params[:id])
 
     respond_to do |format|
       if @provider.update_attributes(params[:provider])
@@ -73,7 +73,7 @@ class ProvidersController < ApplicationController
   # DELETE /providers/1
   # DELETE /providers/1.json
   def destroy
-    @provider = Provider.find(params[:id])
+    @provider = current_provider # Provider.find(params[:id])
     @provider.destroy
 
     respond_to do |format|
@@ -81,4 +81,29 @@ class ProvidersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def issues
+    @customer_issues = []
+    @partner_issues = []
+    @provider = current_provider
+    @customers = @provider.customers
+    @customers.each do |customer|
+      customer.issues.each do |issue|
+        @customer_issues << issue
+      end
+    end
+    @partners = @provider.partners
+    @partners.each do |partner|
+      partner.issues.each do |issue|
+        @partner_issues << issue
+      end
+    end
+  end
+  
+  def plans
+    @provider = current_provider
+    @plans = Plan.order("contacts.name").joins(:contact).select("plans.*, contacts.name as contact_name")
+  end
+  
+  
 end

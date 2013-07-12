@@ -106,5 +106,17 @@ class PartnersController < ApplicationController
      @partner = Partner.find(params[:id])
      @issue_histories = IssueHistory.where(['issueable_type = ? AND issueable_id = ?', "Partner", @partner.id]).order('close_date desc')
    end
+   
+   def show_map
+     @partner = Partner.find(params[:id])
+     @partners = @partner.subtree.where(:provider_id => current_provider)
+     @customer_array = []
+     @partners.each do |partner|
+       partner.customers.each do |customer|
+         @customer_array += customer.subtree.where(:provider_id => current_provider).pluck("id")
+       end
+     end
+     @customers = Customer.find_all_by_id(@customer_array.uniq) #   Customer.unscoped.find(14).subtree.where(:provider_id => 1)
+   end
   
 end

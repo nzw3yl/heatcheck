@@ -74,7 +74,7 @@ class IssuesController < ApplicationController
     end
     
     def load_issueable_v2
-      klass =[Customer, Partner].detect {|i| params["#{i.name.underscore}_id"]}
+      klass =[Customer, Partner, Provider].detect {|i| params["#{i.name.underscore}_id"]}
       @issueable = klass.find(params["#{klass.name.underscore}_id"])
     end
 end

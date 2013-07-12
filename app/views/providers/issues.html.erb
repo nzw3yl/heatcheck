@@ -1,0 +1,46 @@
+<ul class="nav nav-tabs">
+	<li><a class="active" href="#customer" data-toggle="tab">Customer</a></li>
+	<li><a href="#partner" data-toggle="tab">Partner</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="customer">
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+		  <th>Temperature</th>
+		  <th>Issue </th>
+		  <th>Customer</th>
+	    </tr>	
+	  </thead>
+	  <tbody>
+	    <% @customer_issues.each do |issue| %>
+	     <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
+		  <td><%= temperature_button(issue.temperature) %></td>
+		  <td><%= link_to(issue.content, [Customer.find_by_id(issue.issueable_id), issue, :plans]) %></td>
+		  <td><%= link_to(Customer.find_by_id(issue.issueable_id).try(:name), customer_path(issue.issueable_id)) %></td>
+	     </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+  </div>
+  <div class="tab-pane" id="partner">
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+		  <th>Temperature</th>
+		  <th>Issue </th>
+		  <th>Partner</th>
+	    </tr>	
+	  </thead>
+	  <tbody>
+	    <% @partner_issues.each do |issue| %>
+	     <tr class="issue" id=<%= "issue_row_#{issue.id}" %>>
+		  <td><%= temperature_button(issue.temperature) %></td>
+		  <td><%= link_to(issue.content, [Partner.find_by_id(issue.issueable_id), issue, :plans]) %></td>
+		  <td><%= link_to(Partner.find_by_id(issue.issueable_id).try(:name), partner_path(issue.issueable_id)) %></td>
+	     </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+  </div>
+</div>

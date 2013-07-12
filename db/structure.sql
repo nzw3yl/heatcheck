@@ -129,7 +129,8 @@ CREATE TABLE customers (
     provider_id integer,
     temperature integer DEFAULT 0,
     auto_temp boolean DEFAULT true,
-    current_heatmap hstore
+    current_heatmap hstore,
+    short_name character varying(255)
 );
 
 
@@ -380,7 +381,8 @@ CREATE TABLE plans (
     contact_id integer,
     issue_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    provider_id integer
 );
 
 
@@ -416,7 +418,8 @@ CREATE TABLE providers (
     customers_count integer DEFAULT 0 NOT NULL,
     partners_count integer DEFAULT 0 NOT NULL,
     issues_count integer DEFAULT 0 NOT NULL,
-    plans_count integer DEFAULT 0 NOT NULL
+    plans_count integer DEFAULT 0 NOT NULL,
+    contracts_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -817,6 +820,13 @@ CREATE INDEX index_plans_on_issue_id ON plans USING btree (issue_id);
 
 
 --
+-- Name: index_plans_on_provider_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_plans_on_provider_id ON plans USING btree (provider_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -911,3 +921,9 @@ INSERT INTO schema_migrations (version) VALUES ('20130703013137');
 INSERT INTO schema_migrations (version) VALUES ('20130705162429');
 
 INSERT INTO schema_migrations (version) VALUES ('20130705165907');
+
+INSERT INTO schema_migrations (version) VALUES ('20130706004656');
+
+INSERT INTO schema_migrations (version) VALUES ('20130710113452');
+
+INSERT INTO schema_migrations (version) VALUES ('20130710121028');

@@ -12,17 +12,24 @@ Heatcheck::Application.routes.draw do
   
   resources :measures
 
-  resources :providers do
-    resources :contacts
+  resources :providers, :shallow => true do
+    resources :contacts 
+    member do
+      get 'issues'
+      get 'plans'
+    end
   end
   
   resources :partners, :shallow => true do
     resources :issues do
         resources :plans
     end
-    get 'show_heat', :on => :member
-    get 'show_contacts', :on => :member
-    get 'show_history', :on => :member
+    member do
+      get 'show_heat'
+      get 'show_contacts'
+      get 'show_history'
+    end
+    get 'show_map', on: :collection
   end
   
   resources :partners do

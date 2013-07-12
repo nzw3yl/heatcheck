@@ -1,6 +1,7 @@
 
 <%= simple_form_for @customer do |f| %>
   		<%= f.input :name %>
+          <%= f.input :short_name %>
 		  <%= f.input :description %>
 		  <%= f.input :temperature, as: :select, collection: [['unknown',0],['green',1],['yellow',2],['red',3],['inferno',4]], :input_html => {:class => "input-medium"} %>
 		  <%= f.input :auto_temp, :label => "Automatic Calculation" %>

@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+	  <th>Owner</th>
+	  <th>Action</th>
+    </tr>	
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+     <% if !plan.complete? %>
+       <tr class="plan" id=<%= "plan_row_#{plan.id}" %>>
+	    <td><%= plan.contact_name %></td>
+	    <td><%= link_to(plan.content, get_issue_path(plan.issue_id)) %></td>
+     </tr>
+     <% end %>
+    <% end %>
+  </tbody>
+</table>
