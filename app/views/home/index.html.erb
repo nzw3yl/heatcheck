@@ -4,7 +4,7 @@
 	    <p>
 	    	<%= form_tag show_map_partners_path, method: "get"  do %>
 			  <%= select_tag :id, options_for_select(Partner.all.collect{ |u| [u.name, u.id] }), :prompt => "Select Partner" %><br/><br/>
-			  <%= submit_tag "View Heat Map", :class => 'btn btn-danger btn-large' %>
+			  <%= submit_tag "View Heat Map", :class => 'btn btn-danger btn-large', :id=> "view_button", disabled: true %>
 			<% end %>
 	    </p>
 	  </div>   

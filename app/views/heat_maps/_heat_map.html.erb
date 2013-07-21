@@ -13,7 +13,7 @@
 	<% @temp_value = temperature_to_integer(@issueable_entity.send(attributize(measure.content)))%>
 	<tr>
 	  <td>
-		  <%= measure.content %>
+		  <%= measure_display(measure.content) %>
 	  </td>
 	  <td>
 		<div class="text-center">

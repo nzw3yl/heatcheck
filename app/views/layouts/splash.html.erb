@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Heatcheck</a>
+          <a class="brand" href="#">Heatcheck360</a>
           <div class="container-fluid nav-collapse">
 	        <ul class="nav nav-pills">
 		      <% if !user_signed_in? %>
@@ -97,31 +97,29 @@
 				<div class="span9">
 				  <div class="row-fluid">
 				    <div id="splash-content" class="splash-text hidden-phone">
-	                  <h3> Is it hot in here?</h3>
+	                  <h2> Is it hot in here?
+		                <small>Understand how your customers feel about your service</small>
+		              </h2>
 	                </div>
 	              </div>
                 </div>
                 <div class="span3">
-                  <div class="row well">
+                  <div class="row well well-small">
                     <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }, :namespace => 'signin') do |f| %>
-                      <%= f.input :email, :label => false, :autofocus => true %>
-                      <%= f.input :password, :label => false, :hint => false %>
+                      <%= f.input :email, :label => false, :placeholder => "user@example.com", :autofocus => true %>
+                      <%= f.input :password, :label => false, :placeholder => "*********", :hint => false %>
                       <%= f.input :remember_me, :as => :boolean, :wrapper => :inline_checkbox if devise_mapping.rememberable? %>
                       <%= f.button :submit, "Sign In", :class => 'btn btn-primary' %>
                       <%= link_to "Forgot your password?", new_password_path('user') %>
                     <% end %>
                   </div>
-                  <div class="row well">
-                    <h3>
-                      <%= t ".sign_up" %>
-                    </h3>
-                    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }, :namespace => 'signup') do |f| %>
-                      <%= f.error_notification %>
-                      <%= display_base_errors resource %>
-                      <%= f.input :email, :label => false, :required => true %>
-                      <%= f.input :password, :label => false, :hint => false, :required => true %>
-                      <%= f.input :password_confirmation, :label => false, :required => true %>
-                      <%= f.button :submit, :class => 'btn btn-primary' %>
+                  <div class="row well well-small">
+                    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }) do |f| %>
+                      <%= f.input :email, :label => false, :placeholder => "new_user@example.com", :autofocus => true %>
+                      <%= f.input :first_name, :label => false, :placeholder => "First Name"%>
+                      <%= f.input :last_name, :label => false, :placeholder => "Last Name"%>
+                      <%= f.input :password, :label => false, :placeholder => "*********", :hint => false %>
+                      <%= f.button :submit, "Sign Up", :class => 'btn btn-primary' %>
                     <% end %>
                   </div>
                 </div>

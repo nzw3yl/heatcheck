@@ -3,7 +3,7 @@
     <div class="container-fluid">
 
       <a class="brand" href="/">
-         <span class="hidden-phone">Heatcheck</span>
+         <span class="hidden-phone">Heatcheck360</span>
          <span class="visible-phone"><i class="icon-fire icon-large"></i></span>
       </a>
       <div class="container-fluid">
@@ -21,6 +21,10 @@
 	            <i class="icon-sitemap icon-large"></i>
 	            <span class="hidden-phone">Customers</span>
 	          <% end %>
+	        <%= link_to "/memberships", :class => 'btn' do  %>
+	            <i class="icon-group icon-large"></i>
+	            <span class="hidden-phone">Members</span>
+	          <% end %>
           <% end %>
         </ul>
         <ul class="nav pull-right">
@@ -36,6 +40,9 @@
 				  </li>
 				  <li>
 					<%= link_to t(".edit_account"), edit_user_registration_path %>
+				  </li>
+				  <li>
+					<%= link_to "Lobby Area", lobbies_show_path %>
 				  </li>
 				  <li><%= link_to "Measures", "/measures"  %></li>
 	              <li><%= link_to "Bring Heat",heat_maps_update_path  %></li>

@@ -1,13 +1,18 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, :alert => exception.message 
+  end
+  
+  
   around_filter :scope_current_provider
   
   def current_provider
     if user_signed_in?
-      Provider.find_by_id(current_user.provider_id)
+      Provider.find_by_id(current_user.provider_id) || Provider.find(ENV['DEMO_SITE_ID'])
     else
-      Provider.find(1)
+      Provider.find(ENV['DEMO_SITE_ID'])
     end
   end
   helper_method :current_provider

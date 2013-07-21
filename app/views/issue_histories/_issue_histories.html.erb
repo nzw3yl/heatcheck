@@ -13,7 +13,7 @@
 	  <td><%= issue.close_date %></td>
 	  <td><%= temperature_button(issue.temperature) %></td>
 	  <td><%= issue.content.humanize %></td>
-	  <td><%= issue.measure %></td>
+	  <td><%= measure_display(issue.measure) %></td>
      </tr>
     <% end %>
   </tbody>

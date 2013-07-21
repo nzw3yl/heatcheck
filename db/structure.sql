@@ -225,6 +225,42 @@ ALTER SEQUENCE heat_logs_id_seq OWNED BY heat_logs.id;
 
 
 --
+-- Name: invites; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE invites (
+    id integer NOT NULL,
+    user_id integer,
+    provider_id integer,
+    invitee_email character varying(255),
+    access_code character varying(255),
+    accepted boolean,
+    valid_thru date,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: invites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invites_id_seq OWNED BY invites.id;
+
+
+--
 -- Name: issue_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -334,6 +370,38 @@ ALTER SEQUENCE measures_id_seq OWNED BY measures.id;
 
 
 --
+-- Name: memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE memberships (
+    id integer NOT NULL,
+    provider_id integer,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
+
+
+--
 -- Name: partners; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -419,7 +487,8 @@ CREATE TABLE providers (
     partners_count integer DEFAULT 0 NOT NULL,
     issues_count integer DEFAULT 0 NOT NULL,
     plans_count integer DEFAULT 0 NOT NULL,
-    contracts_count integer DEFAULT 0 NOT NULL
+    contracts_count integer DEFAULT 0 NOT NULL,
+    creator_id integer
 );
 
 
@@ -440,6 +509,39 @@ CREATE SEQUENCE providers_id_seq
 --
 
 ALTER SEQUENCE providers_id_seq OWNED BY providers.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE roles (
+    id integer NOT NULL,
+    name character varying(255),
+    resource_id integer,
+    resource_type character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
@@ -469,7 +571,14 @@ CREATE TABLE users (
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    provider_id integer
+    provider_id integer,
+    roles_mask integer,
+    first_name character varying(255),
+    last_name character varying(255),
+    confirmation_token character varying(255),
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying(255)
 );
 
 
@@ -490,6 +599,16 @@ CREATE SEQUENCE users_id_seq
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE users_roles (
+    user_id integer,
+    role_id integer
+);
 
 
 --
@@ -531,6 +650,13 @@ ALTER TABLE heat_logs ALTER COLUMN id SET DEFAULT nextval('heat_logs_id_seq'::re
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE invites ALTER COLUMN id SET DEFAULT nextval('invites_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE issue_histories ALTER COLUMN id SET DEFAULT nextval('issue_histories_id_seq'::regclass);
 
 
@@ -552,6 +678,13 @@ ALTER TABLE measures ALTER COLUMN id SET DEFAULT nextval('measures_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE memberships ALTER COLUMN id SET DEFAULT nextval('memberships_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE partners ALTER COLUMN id SET DEFAULT nextval('partners_id_seq'::regclass);
 
 
@@ -567,6 +700,13 @@ ALTER TABLE plans ALTER COLUMN id SET DEFAULT nextval('plans_id_seq'::regclass);
 --
 
 ALTER TABLE providers ALTER COLUMN id SET DEFAULT nextval('providers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regclass);
 
 
 --
@@ -617,6 +757,14 @@ ALTER TABLE ONLY heat_logs
 
 
 --
+-- Name: invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY invites
+    ADD CONSTRAINT invites_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: issue_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -641,6 +789,14 @@ ALTER TABLE ONLY measures
 
 
 --
+-- Name: memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: partners_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -662,6 +818,14 @@ ALTER TABLE ONLY plans
 
 ALTER TABLE ONLY providers
     ADD CONSTRAINT providers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -827,6 +991,20 @@ CREATE INDEX index_plans_on_provider_id ON plans USING btree (provider_id);
 
 
 --
+-- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_roles_on_name ON roles USING btree (name);
+
+
+--
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON roles USING btree (name, resource_type, resource_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -838,6 +1016,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree (user_id, role_id);
 
 
 --
@@ -927,3 +1112,17 @@ INSERT INTO schema_migrations (version) VALUES ('20130706004656');
 INSERT INTO schema_migrations (version) VALUES ('20130710113452');
 
 INSERT INTO schema_migrations (version) VALUES ('20130710121028');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716005126');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716011846');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716023054');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716204302');
+
+INSERT INTO schema_migrations (version) VALUES ('20130719111929');
+
+INSERT INTO schema_migrations (version) VALUES ('20130720022146');
+
+INSERT INTO schema_migrations (version) VALUES ('20130720170145');

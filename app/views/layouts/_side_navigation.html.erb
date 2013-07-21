@@ -1,7 +1,7 @@
 <div class="span3">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header"><%= current_user.email%>
+      <li class="nav-header"><%= current_user.first_name%> <%= current_user.last_name%> (<%= current_user.provider_id %>)
 	  </li>
       <li><%= link_to "Customers (" + current_provider.customers_count.to_s + ")", "/customers"  %></li>
       <li><%= link_to "Partners (" + current_provider.partners_count.to_s + ")", "/partners"  %></li>

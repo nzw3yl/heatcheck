@@ -1,9 +1,10 @@
 <%= simple_form_for @provider, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :name %>
-  <%= f.input :description %>
+  <%= f.input :name,  :label => "Name&nbsp; ", :placeholder => "Company Name" %><br/>
+  <%= f.input :description, :label => "Description&nbsp; ", :placeholder => "Brief Description"  %>
+  <%= f.input :creator_id, :as => :hidden, :input_html => {:value => current_user.id } %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                providers_path, :class => 'btn' %>
+                lobbies_show_path, :class => 'btn' %>
   </div>
 <% end %>

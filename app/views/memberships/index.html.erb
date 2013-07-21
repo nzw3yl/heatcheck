@@ -1,0 +1,27 @@
+
+
+<h3>Members</h3>
+<div class="span12">
+  <table class="table table-condensed table-striped">
+    <thead>
+	<tr>
+		<th>First name</th>
+		<th>Last name</th>
+		<th>Email</th>
+		<th>Registered</th>
+		<th>Role</th>
+    </tr>
+    </thead>
+	<tbody>
+	  <% @members.each do |member| %>
+	  <tr>
+	    <td><%= link_to member.first_name, user_path(member.id) %></td>
+    	<td><%= link_to member.last_name, user_path(member.id)  %></td>
+	    <td><%= member.email %></td>
+	    <td><%= member.created_at.to_date %></td>
+	    <td><%= member.roles.first.name.titleize unless member.roles.first.nil? %></td> 
+		</tr>
+	  <% end %>
+	</tbody>
+  </table>
+</div>

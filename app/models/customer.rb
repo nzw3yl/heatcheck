@@ -1,6 +1,9 @@
 class Customer < ActiveRecord::Base
   serialize :current_heatmap, ActiveRecord::Coders::Hstore
+  include Measureable
   attr_accessible :description, :name, :parent_id, :temperature, :auto_temp, :partner_ids, :short_name
+  
+  before_create :set_short_name
   
   has_ancestry
   belongs_to :provider
@@ -11,22 +14,15 @@ class Customer < ActiveRecord::Base
   counter_culture :provider
   
   validates :short_name, length: { in: 2..4 }, on: :update
- 
+  validates_length_of :name, minimum: 2 , allow_blank: false
   
   default_scope {where(provider_id: Provider.current_id)}
 
-    #Measure.pluck(:content).map(&:downcase).each do |key|
-     %w[product stability account_response].each do |key|
-        attr_accessible key
-        scope "has_#{key}", lambda { |value| where("current_heatmap @> (? => ?)", key, value) }
-
-        define_method(key) do
-          current_heatmap && current_heatmap[key]
-        end
-
-        define_method("#{key}=") do |value|
-          self.current_heatmap = (current_heatmap || {}).merge(key => value)
-        end
-      end
-
+  def set_short_name
+    if name.match(" ")
+      self.short_name = name.gsub(/(\w)\w+\W*/, '\1').gsub(/\s+/, "")[0..3].upcase
+    else
+      self.short_name = name[0..3].upcase
+    end
+  end
 end

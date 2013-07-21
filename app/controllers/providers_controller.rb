@@ -44,7 +44,7 @@ class ProvidersController < ApplicationController
     @provider = Provider.new(params[:provider])
 
     respond_to do |format|
-      if @provider.save
+      if params[:creator_id] != current_user.id && @provider.save
         format.html { redirect_to @provider, notice: 'Provider was successfully created.' }
         format.json { render json: @provider, status: :created, location: @provider }
       else
@@ -105,5 +105,19 @@ class ProvidersController < ApplicationController
     @plans = Plan.order("contacts.name").joins(:contact).select("plans.*, contacts.name as contact_name")
   end
   
+  def switch
+    @new_provider = params[:new_provider]
+    
+    respond_to do |format|
+      if current_user.switch_provider!(@new_provider)
+        format.html { redirect_to root_path, notice: 'Changed to new service provider successfully.' }
+        format.json { head :no_content }
+      else
+        flash.now[:warning] = "Now using the demonstration site. "
+        format.html { render lobbies_show_path }
+        format.json { head :no_content }
+      end
+    end
+  end
   
 end

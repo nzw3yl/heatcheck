@@ -1,0 +1,33 @@
+<h1>Listing invites</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Provider</th>
+    <th>Invitee email</th>
+    <th>Access code</th>
+    <th>Accepted</th>
+    <th>Valid thru</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invites.each do |invite| %>
+  <tr>
+    <td><%= invite.user_id %></td>
+    <td><%= invite.provider_id %></td>
+    <td><%= invite.invitee_email %></td>
+    <td><%= invite.access_code %></td>
+    <td><%= invite.accepted %></td>
+    <td><%= invite.valid_thru %></td>
+    <td><%= link_to 'Show', invite %></td>
+    <td><%= link_to 'Edit', edit_invite_path(invite) %></td>
+    <td><%= link_to 'Destroy', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invite', new_invite_path %>

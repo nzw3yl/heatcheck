@@ -7,7 +7,7 @@
 	<% @customers.each do |customer|%>
 	  <th class="tight-table">
 		<div class="text-center">
-	      <%= customer.short_name %>
+	      <%= customer.short_name.upcase %>
 	    </div>
 	  </th>
 	<% end %>
@@ -16,7 +16,7 @@
   <tbody>
 	<% Measure.all.each do |measure| %>
 	<tr>
-	  <td><%= measure.content %></td>
+	  <td><%= measure_display(measure.content) %></td>
 	  <td class="heat-map">
 	    <div class="text-center">
 	      <%= temperature_button(@partner.send("#{attributize(measure.content.downcase)}"))%>

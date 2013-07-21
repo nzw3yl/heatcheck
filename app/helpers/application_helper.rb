@@ -14,6 +14,15 @@ module ApplicationHelper
     string.downcase.tr(" ","_")
   end
   
+  def measure_display(measure_name)
+    measure_mask = "measure_by_"
+    if measure_name.start_with?(measure_mask)
+      measure_name.sub(/^#{measure_mask}/,'').tr("_"," ").titleize
+    else
+      measure_name.tr("_"," ").titleize
+    end     
+  end
+  
   def resource_name
      :user
   end

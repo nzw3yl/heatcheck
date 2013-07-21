@@ -1,0 +1,30 @@
+
+<div class="hero-unit">  
+    <h1>HeatCheck360 <br/><small>Is it hot in here?</small></h1>  
+  </div>   
+  <div class="row-fluid"> 
+	<div class="span4">  
+	    <h2>Invited</h2>  
+	    <p>If you have received an access code for this site please enter it below to access your site.</p>  
+	    <p>
+	    	<%= form_tag lobbies_update_path, method: "put" do %>
+			  <%= text_field_tag :access_code, nil, :placeholder => "Access Code" %><br/><br/>
+			  <%= submit_tag "Submit", :class => 'btn btn-success btn-large' %>
+			<% end %>
+	    </p> 
+	</div> 
+    <div class="span4">  
+      <h2>Start Fresh</h2>  
+      <p>Thanks for registering. Get started with an empty site and configure it to track the issues that matter most to your customers and partners.
+	     blah blah blah blah blah blah blah blah blah blah blah blah blah 
+	  </p>  
+      <p><a class="btn btn-success btn-large" href=<%= new_provider_path%> >New</a></p>  
+    </div>  
+  <div class="span4">  
+    <h2>Demo Area</h2>  
+    <p>Look around the demo site to learn about the things that you can do in here. blah blah blah blah blah blah blah blah blah blah blah blah blah
+     blah blah blah blah blah blah blah blah blah blah blah blah blah</p>  
+    <p><a class="btn btn-success btn-large" href="/switch/<%= ENV['DEMO_SITE_ID'] %>">Demo</a></p>  
+  </div>  
+
+  </div>

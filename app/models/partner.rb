@@ -1,5 +1,6 @@
 class Partner < ActiveRecord::Base
   serialize :current_heatmap, ActiveRecord::Coders::Hstore
+  include Measureable
   attr_accessible :description, :name, :parent_id, :temperature, :auto_temp, :customer_ids
   has_ancestry
   belongs_to :provider
@@ -11,18 +12,7 @@ class Partner < ActiveRecord::Base
   
   default_scope {where(provider_id: Provider.current_id)}
   
-  #Measure.pluck(:content).map(&:downcase).each do |key|
-   %w[product stability account_response].each do |key|
-      attr_accessible key
-      scope "has_#{key}", lambda { |value| where("current_heatmap @> (? => ?)", key, value) }
+  
 
-      define_method(key) do
-        current_heatmap && current_heatmap[key]
-      end
-
-      define_method("#{key}=") do |value|
-        self.current_heatmap = (current_heatmap || {}).merge(key => value)
-      end
-    end
   
 end

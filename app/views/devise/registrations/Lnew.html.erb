@@ -1,0 +1,55 @@
+<div id="main">
+  <div class="container">
+    <div class="test">
+	  <div class="row-fluid">
+		<div class="span12">
+		  <div class="row-fluid">
+			<div class="span9">
+			  <div class="row-fluid">
+			    <div id="splash-content" class="splash-text hidden-phone">
+                  <h3> Is it hot in here?</h3>
+                  <div id="request-invite" class="modal" style="display: <%= @user.errors.any? ? 'block' : 'none';%>">
+				    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) , :html => {:class => 'form-horizontal', :id => 'new_user_reg'}) do |f| %>
+				      <div class="modal-header">
+				         <a class="close" data-dismiss="modal">&#215;</a>
+				         <h3>Request Invitation</h3>
+				      </div>
+				      <div class="modal-body">
+				       <%= f.error_notification %>
+				       <%= f.input :email, :placeholder => 'new@example.com' %> 
+				       </div>
+				      <div class="modal-footer">
+				        <%= f.submit "Sign Up", :class => "btn btn-primary", :id => 'invitation_button' %> 
+				          <a class="btn" data-dismiss="modal" href="#">Close</a>
+				      </div>
+				    <% end %> 
+				  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span3">
+              <div class="row well well-small">
+                <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical', :id => 'new_user_session' }) do |f| %>
+                  <%= f.error_notification %>
+                  <%= f.input :email, :label => false, :placeholder => "user@example.com", :autofocus => true %>
+                  <%= f.input :password, :label => false, :placeholder => "*********", :hint => false %>
+                  <%= f.input :remember_me, :as => :boolean, :wrapper => :inline_checkbox if devise_mapping.rememberable? %>
+                  <%= f.button :submit, "Sign In", :class => 'btn btn-primary' %>
+                  <%= link_to "Forgot your password?", new_password_path('user') %>
+                <% end %>
+              </div>
+              <div class="row well">
+                <div id="romance-copy" style="text-align: center;">
+				   <h4>I can take the heat...</h4>
+				</div>
+				<div id="call-to-action" style="text-align: center;">
+				   <a class="btn btn-primary" data-toggle="modal" href="#request-invite">Request invite</a>
+				</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,11 +33,11 @@ th.tight-table {
 
 
 th.tight-measure {
-  width: 120px;
+  width: 180px;
 }
 
-.content {
-  background-color: #eee;
+.content-change {
+  background-color: #E6E6FA;
   padding: 20px;
   margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 0 0 6px 6px;
@@ -51,4 +51,31 @@ th.tight-measure {
 .hero-unit {
   text-align: center;
   vertical-align: middle;
+}
+
+.splash {
+  margin: 0;
+  background-image: url('flare.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat:no-repeat;
+  display: compact;
+  font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.splash-text {
+  color: #ffffff;
+}
+
+
+#splash-content {
+  position: fixed;
+  width: 256px;
+  height: 256px;
+  margin-left: -128px;
+  margin-top: -128px;
+  left: 25%;
+  top: 50%;
 }

@@ -38,6 +38,7 @@
     <%= render 'layouts/header' %>
     
     <div class="container-fluid">
+	 <div class="content">
       <div class="row-fluid">
         <%= render 'layouts/side_navigation' if user_signed_in? %>
         <div class="span9">
@@ -45,7 +46,7 @@
           <%= yield %>
         </div>
       </div><!--/row-->
-
+     </div>
         <%= render 'layouts/footer' %>
 
     </div> <!-- /container -->

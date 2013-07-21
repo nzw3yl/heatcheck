@@ -6,7 +6,7 @@
      <td><%= heat_log.entity_id %></td>
      <td><%= temperature_button(heat_log.temperature) %></td>
      <td><% if Measure.find_by_id(heat_log.measure_id) %>
-           <%= Measure.find_by_id(heat_log.measure_id).content %>
+           <%= measure_display(Measure.find_by_id(heat_log.measure_id).content) %>
          <% end %>
 	 </td>
      <td>

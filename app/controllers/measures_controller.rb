@@ -31,6 +31,7 @@ class MeasuresController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @measure }
+      format.js
     end
   end
 
