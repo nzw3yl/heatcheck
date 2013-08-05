@@ -1,9 +1,13 @@
 class InvitesController < ApplicationController
+  before_filter :authenticate_user!
+  require 'securerandom'
   # GET /invites
   # GET /invites.json
   def index
-    @invites = Invite.all
-
+    @invites = Invite.where(:accepted => false).order(:invitee_email).joins(:user).select("invites.*, users.first_name as first_name, users.last_name as last_name")
+    @invite = current_provider.invites.build
+    @invite.access_code = suggest_access_code
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @invites }
@@ -40,7 +44,12 @@ class InvitesController < ApplicationController
   # POST /invites
   # POST /invites.json
   def create
+    # code smell
+    params[:invite][:provider_id] = current_provider.id
+    params[:invite][:user_id] = current_user.id
+    params[:invite][:accepted] = false
     @invite = Invite.new(params[:invite])
+
 
     respond_to do |format|
       if @invite.save
@@ -80,4 +89,10 @@ class InvitesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  private
+    def suggest_access_code
+      SecureRandom.hex(12).upcase[0..7]
+    end
 end

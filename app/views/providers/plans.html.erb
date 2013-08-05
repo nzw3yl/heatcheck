@@ -1,18 +1,26 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-	  <th>Owner</th>
-	  <th>Action</th>
-    </tr>	
-  </thead>
-  <tbody>
-    <% @plans.each do |plan| %>
-     <% if !plan.complete? %>
-       <tr class="plan" id=<%= "plan_row_#{plan.id}" %>>
-	    <td><%= plan.contact_name %></td>
-	    <td><%= link_to(plan.content, get_issue_path(plan.issue_id)) %></td>
-     </tr>
-     <% end %>
-    <% end %>
-  </tbody>
-</table>
+<% if @plans.empty? %>
+<div class="alert alert-block alert-info">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	<h4>No Action Items!</h4>
+    You can add action items for each issue and assign them to partner or company contacts.  This view will show you ALL the outstanding action items for all the issues that you are currently tracking.
+</div>
+<% else %>
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+		  <th>Owner</th>
+		  <th>Action</th>
+	    </tr>	
+	  </thead>
+	  <tbody>
+	    <% @plans.each do |plan| %>
+	     <% if !plan.complete? %>
+	       <tr class="plan" id=<%= "plan_row_#{plan.id}" %>>
+		    <td><%= plan.contact_name %></td>
+		    <td><%= link_to(plan.content, get_issue_path(plan.issue_id)) %></td>
+	     </tr>
+	     <% end %>
+	    <% end %>
+	  </tbody>
+	</table>
+<% end %>

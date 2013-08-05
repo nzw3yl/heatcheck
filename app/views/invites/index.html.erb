@@ -1,33 +1,43 @@
-<h1>Listing invites</h1>
-
-<table>
-  <tr>
-    <th>User</th>
-    <th>Provider</th>
-    <th>Invitee email</th>
-    <th>Access code</th>
-    <th>Accepted</th>
-    <th>Valid thru</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @invites.each do |invite| %>
-  <tr>
-    <td><%= invite.user_id %></td>
-    <td><%= invite.provider_id %></td>
-    <td><%= invite.invitee_email %></td>
-    <td><%= invite.access_code %></td>
-    <td><%= invite.accepted %></td>
-    <td><%= invite.valid_thru %></td>
-    <td><%= link_to 'Show', invite %></td>
-    <td><%= link_to 'Edit', edit_invite_path(invite) %></td>
-    <td><%= link_to 'Destroy', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Invite', new_invite_path %>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+	<li><a href="<%= memberships_path %>">Members</a></li>
+	<li class ="active"><a href="#">Invitations</a></li>
+  </ul>
+  <div class ="tab-content">
+	<div class="tab-pane active" id="invitations">
+		<%= simple_form_for @invite, :html => { :class => 'form-inline' } do |f| %>
+		  <%= f.error_notification %>
+		  <div class="controls controls-row">
+			<%= f.label "Enter email address and access code" %>
+		  </div>
+		  <div class="controls controls-row">
+		    <%= f.input_field :invitee_email, :placeholder => "user@example.com" %>
+		    <%= f.input_field :access_code, :label => "override" %>
+		    <%= f.button :submit, "Invite", :class => "btn btn-success" %>
+		  </div>
+		<% end %>
+  	<table class="table table-condensed table-striped">
+	    <thead>
+		<tr>
+			<th>Email</th>
+			<th>Valid Thru</th>
+			<th>Invited By</th>
+			<th></th>
+	    </tr>
+	    </thead>
+		<tbody>
+		  <% @invites.each do |invite| %>
+		  <tr>
+			<td><%= invite.invitee_email %></td>
+			<td><%= invite.valid_thru %></td>
+		    <td><%= invite.first_name + " " + invite.last_name %></td>
+		    <td><%= link_to invite, method: :delete, data: {confirm: "Are you sure?"}, :class => "btn btn-mini btn-danger" do %>
+		          <i class=" icon-remove"></i>
+		        <% end %>
+		    </td>
+			</tr>
+		  <% end %>
+		</tbody>
+	  </table>
+	</div>
+  </div>

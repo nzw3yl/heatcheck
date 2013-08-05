@@ -1,18 +1,39 @@
 <div class="span3">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header"><%= current_user.first_name%> <%= current_user.last_name%> (<%= current_user.provider_id %>)
+      <li>
+	    <button class="btn btn-block" type="button">
+		  <i class="icon-user icon-large"></i>
+          <%= current_user.first_name.humanize %> <%= current_user.last_name.humanize %>
+        </button>
 	  </li>
-      <li><%= link_to "Customers (" + current_provider.customers_count.to_s + ")", "/customers"  %></li>
-      <li><%= link_to "Partners (" + current_provider.partners_count.to_s + ")", "/partners"  %></li>
-      <li><%= link_to "Contracts (" + current_provider.contracts_count.to_s + ")", "/contracts"  %></li>
+
     </ul>
   </div><!--/.well -->
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header">Summary</li>
-      <li><%= link_to "Issues (" + current_provider.issues_count.to_s + ")", issues_provider_path(current_provider)  %></li>
-      <li><%= link_to "Incomplete Actions (" + current_provider.plans_count.to_s + ")", plans_provider_path(current_provider)  %></li>
+	  <li><button class="btn btn-block btn-info disabled" type="button"> <%= current_provider.name.titleize %></button></li>
+      <li><%= link_to_unless(current_provider.customers_count == 0, "Customers (" + current_provider.customers_count.to_s + ")", "/customers") do |name|
+	     link_to("Add a customer", "/customers")
+	    end
+	    %>
+	  </li>
+      <li><%= link_to_unless(current_provider.partners_count == 0, "Partners (" + current_provider.partners_count.to_s + ")", "/partners") do |name|
+	      link_to("Add a partner", "/partners")
+	    end  
+	    %>
+	  </li>
+      <li><%= link_to_unless(current_provider.partners_count == 0 || current_provider.customers_count == 0, "Contracts (" + current_provider.contracts_count.to_s + ")", "/contracts")  %></li>
+      <li><%= link_to_if(current_provider.partners_count > 0 || current_provider.customers_count > 0,"Issues (" + current_provider.issues_count.to_s + ")", issues_provider_path(current_provider))  %></li>
+      <li><%= link_to_if(current_provider.partners_count > 0 || current_provider.customers_count > 0, "Incomplete Actions (" + current_provider.plans_count.to_s + ")", plans_provider_path(current_provider))  %></li>
     </ul>
   </div><!--/.well -->
+  <% if current_user.has_role? :admin %>
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header">Admin</li>
+      <li><%= link_to "Users", users_path %></li>
+    </ul>
+  </div><!--/.well -->
+  <% end %>
 </div><!--/span-->

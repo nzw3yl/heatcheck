@@ -8,11 +8,13 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name
+  attr_accessible :role_ids, :as => :admin
   
   after_create :send_welcome_email
   # attr_accessible :title, :body
   has_many :memberships
   has_many :providers, through: :memberships
+  has_many :invites
   belongs_to :provider
   
   before_create :set_provider_id
@@ -48,7 +50,12 @@ class User < ActiveRecord::Base
   end
   
   def validate_invitation(invitation_code)
-    false  # stub
+    @invite = Invite.find_by_invitee_email_and_access_code(self.email, invitation_code)
+    if @invite
+      @invite.accept!
+      self.provider_id = @invite.provider_id
+      self.save
+    end
   end
 
   def switch_provider!(new_provider)
@@ -73,6 +80,7 @@ class User < ActiveRecord::Base
     end
     
     def send_welcome_email
+      self.add_role :limbo
       return if email.include?(ENV['ADMIN_EMAIL']) 
       UserMailer.welcome_email(self).deliver
     end

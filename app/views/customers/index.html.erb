@@ -2,6 +2,19 @@
 <div>
 <h3>Customers <small>(through partners)</small></h3>
 </div>
+<% if @customers.empty? %>
+	<div class="alert alert-block alert-info">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		<h4>Get Started!</h4>
+		Add your first customer by clicking below.  You can keep it simple or create an organization tree showing a hierarchy so a "customer" can be a company, division or any business unit that you would like to track separately. For more complex structures start with the top most unit and add sub-units later on.
+	</div>
+	<% elsif current_provider.contracts_count == 0 %>
+		<div class="alert alert-block alert-info">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>Tip!</h4>
+	        Partners and customers are associated through contracts.  Once you have at least one of each you will be able to get an overall heatcheck by creating a contract.  You will also be able to track issues across all companies for a particular partner.
+		</div>
+<% end %>
 <p><%= link_to "New Customer", new_customer_path, id: "new_customer", remote: true, class: "btn btn-success"  %></p>
 <br/>
 <%= nested_customers @customers.arrange(:order => :name) %>

@@ -1,6 +1,8 @@
 class ContractsController < ApplicationController
   # GET /contracts
   # GET /contracts.json
+  before_filter :authenticate_user!
+  
   def index
     @contracts = Contract.all
 

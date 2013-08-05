@@ -1,3 +1,4 @@
+
 class RegistrationsController < Devise::RegistrationsController 
   protected
   
@@ -13,6 +14,6 @@ class RegistrationsController < Devise::RegistrationsController
   
   def after_sign_up_path_for(resource)
   # the page new users will see after sign up (after launch, when no invitation is needed) 
-    redirect_to root_path
+    redirect_to lobbies_show_path
   end 
 end

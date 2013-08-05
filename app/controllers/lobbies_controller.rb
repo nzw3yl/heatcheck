@@ -1,4 +1,5 @@
 class LobbiesController < ApplicationController
+  before_filter :authenticate_user!
   def update
     @user = current_user || User.find(params[:user_id])  
     respond_to do |format|
