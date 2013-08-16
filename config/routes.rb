@@ -33,6 +33,7 @@ Heatcheck::Application.routes.draw do
       get 'show_heat'
       get 'show_contacts'
       get 'show_history'
+      get 'show_customers'
     end
     get 'show_map', on: :collection
   end

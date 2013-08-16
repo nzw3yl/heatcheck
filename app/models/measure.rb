@@ -5,7 +5,7 @@ class Measure < ActiveRecord::Base
   before_validation :add_content_mask
   
   validates_presence_of :content
-
+  counter_culture :provider
   
   default_scope {where(provider_id: Provider.current_id)}
   

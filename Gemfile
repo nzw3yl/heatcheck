@@ -75,3 +75,4 @@ gem "sidekiq"
 gem "sinatra", require: false
 gem "slim"
 gem 'counter_culture', '~> 0.1.7'
+gem 'powder'

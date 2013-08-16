@@ -1,5 +1,9 @@
 <%= simple_form_for @measure do |f| %>
-  <%= f.input :content, :label => false, :placeholder => "New Measure" %>
+  <% if @measure.content %>
+   <%= f.input :content, :label => false, :input_html => {:value => measure_display(@measure.content)},:placeholder => "New Measure" %>
+  <% else%>
+    <%= f.input :content, :label => false, :placeholder => "New Measure" %>
+  <% end %>
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 measures_path, :class => 'btn' %>

@@ -3,6 +3,8 @@
   belongs_to  :provider
   belongs_to  :user
   before_create :set_valid_period
+ # counter_culture :user, :column_name => Proc.new {|model| (model.email == self.invitee_email) ? 'invites_count' : nil }
+
   
   def accept!
     self.accepted = true

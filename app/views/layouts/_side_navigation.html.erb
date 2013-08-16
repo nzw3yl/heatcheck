@@ -1,18 +1,37 @@
 <div class="span3">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li>
-	    <button class="btn btn-block" type="button">
+	     <%= link_to edit_user_registration_path, :class => 'btn btn-block btn-info' do  %>
 		  <i class="icon-user icon-large"></i>
           <%= current_user.first_name.humanize %> <%= current_user.last_name.humanize %>
-        </button>
-	  </li>
-
+         <% end %>
     </ul>
   </div><!--/.well -->
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-	  <li><button class="btn btn-block btn-info disabled" type="button"> <%= current_provider.name.titleize %></button></li>
+	<% if current_user.memberships_count > 1 %>
+	  	<div class="btn-group">
+		    <%= link_to provider_path(current_provider.id), :class => 'btn btn-info provider-btn' do  %>
+	           <i class="icon-chevron-right icon-large"></i>
+	           <%= current_provider.name.titleize %>
+	        <% end %>
+	        <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+	            <span class="caret"></span>
+	        </button>
+	       	<ul class="dropdown-menu">
+		     <% current_user.memberships.each do |mbrs| %>
+		     <li><%= link_to Provider.find_by_id(mbrs.provider_id).name, provider_path(mbrs.provider_id) %></li>
+		     <% end %>
+		    </ul>
+		  </div>
+	<% else %>
+	  <ul class="nav nav-list">
+	     <%=  link_to provider_path(current_provider.id), :class => 'btn btn-info btn-block'  do  %>
+		  <i class="icon-null icon-large"></i>
+          <%= current_provider.name.titleize %>
+         <% end %>
+    </ul>
+	<% end %>
       <li><%= link_to_unless(current_provider.customers_count == 0, "Customers (" + current_provider.customers_count.to_s + ")", "/customers") do |name|
 	     link_to("Add a customer", "/customers")
 	    end
@@ -23,10 +42,22 @@
 	    end  
 	    %>
 	  </li>
+	  <li><%= link_to_unless(current_provider.measures_count == 0, "Criteria (" + current_provider.measures_count.to_s + ")", "/measures") do |name|
+	      link_to("Add measurement criteria", "/measures")
+	    end  
+	    %>
+	  </li>
       <li><%= link_to_unless(current_provider.partners_count == 0 || current_provider.customers_count == 0, "Contracts (" + current_provider.contracts_count.to_s + ")", "/contracts")  %></li>
       <li><%= link_to_if(current_provider.partners_count > 0 || current_provider.customers_count > 0,"Issues (" + current_provider.issues_count.to_s + ")", issues_provider_path(current_provider))  %></li>
       <li><%= link_to_if(current_provider.partners_count > 0 || current_provider.customers_count > 0, "Incomplete Actions (" + current_provider.plans_count.to_s + ")", plans_provider_path(current_provider))  %></li>
+      <li><hr/></li>
+      <%= link_to heat_maps_update_path, :class => 'btn btn-block btn-danger' do  %>
+         <i class="icon-fire icon-large"></i>
+         Refresh Heatmap
+       <% end %>
+      
     </ul>
+
   </div><!--/.well -->
   <% if current_user.has_role? :admin %>
   <div class="well sidebar-nav">

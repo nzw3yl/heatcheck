@@ -118,5 +118,10 @@ class PartnersController < ApplicationController
      end
      @customers = Customer.find_all_by_id(@customer_array.uniq) #   Customer.unscoped.find(14).subtree.where(:provider_id => 1)
    end
+   
+   def show_customers
+     @partner = Partner.find(params[:id])
+     @customers = @partner.customers
+   end
   
 end

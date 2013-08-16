@@ -86,5 +86,12 @@ module ApplicationHelper
     @issueable_entity = resource.singularize.classify.constantize.find(id)
     @issueable_class = resource.singularize.classify.constantize.to_s
   end
+  
+  
+  def nested_customers(customers)
+    customers.map do |customer, sub_customer|
+      render(customer) + content_tag(:div, nested_customers(sub_customer), :class => "nested_items")
+    end.join.html_safe
+  end
  
 end

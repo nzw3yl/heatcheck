@@ -1,9 +1,72 @@
-<div class="hero-unit">
-<h1>Thank You for Registering!</h1>
-<p>Please check your email and follow the instructions to confirm your email address.  Once that is completed you will have access to HeatCheck360.</p>
-<p>
-<a class="btn btn-primary btn-large" href="/">
-Sign In
-</a>
-</p>
-</div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<style type="text/css">
+.thank-you {
+  margin: 0;
+  background-image: url('lava.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat:no-repeat;
+  display: compact;
+  font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.thank-you-text {
+  color: #ffffff;
+}
+
+
+#thank-you-content {
+  position: fixed;
+  width: 512px;
+  height: 256px;
+  margin-left: -128px;
+  margin-top: -128px;
+  left: 25%;
+  top: 50%;
+}
+
+.signin {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	background-color:#79bbff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #528ecc;
+}.signin:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	background-color:#378de5;
+}.signin:active {
+	position:relative;
+	top:1px;
+}
+</style>
+</head>
+  <body class="thank-you" >
+		<div id="thank-you-content" class="thank-you-text">
+		<h1>Thank You for Registering!</h1>
+		<p>Please check your email and follow the instructions to confirm your email address.  Once that is completed you will have access to HeatCheck360.</p>
+		<p>
+		  <a class="signin" href="/">Sign In</a>
+		</p>
+		</div>
+	</body>
+</html>

@@ -1,5 +1,6 @@
 class ProvidersController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource :except => :show
   # GET /providers
   # GET /providers.json
   def index
@@ -14,7 +15,11 @@ class ProvidersController < ApplicationController
   # GET /providers/1
   # GET /providers/1.json
   def show
-    @provider = current_provider #Provider.find(params[:id])
+    if has_membership?(params[:id].to_i)
+      @provider = Provider.find(params[:id])
+    else
+      @provider = current_provider
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -109,7 +114,7 @@ class ProvidersController < ApplicationController
     @new_provider = params[:new_provider]
     
     respond_to do |format|
-      if current_user.switch_provider!(@new_provider)
+      if current_user.switch_provider!(@new_provider.to_i)
         format.html { redirect_to root_path, notice: 'Changed to new service provider successfully.' }
         format.json { head :no_content }
       else
@@ -118,6 +123,11 @@ class ProvidersController < ApplicationController
         format.json { head :no_content }
       end
     end
+  end
+  
+  def has_membership?(provider_id)
+    
+    current_user.memberships.pluck(:provider_id).include?(provider_id)
   end
   
 end

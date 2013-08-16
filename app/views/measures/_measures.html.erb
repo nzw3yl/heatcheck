@@ -1,26 +1,33 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Measures</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @measures.each do |measure| %>
-      <tr>
-        <td><%= link_to measure_display(measure.content), measure_path(measure) %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_measure_path(measure), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      measure_path(measure),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<% if @measures.empty? %>
+	<div class="alert alert-block alert-info">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		<h4>Get Started!</h4>
+        Create a list of the criteria that you will be using to measure your relationships with your customers and partners.  These criteria will allow you to categorize the issues that you are tracking and appear in your heatmap.  
+	</div>
+<% else %>
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th>Measures</th>
+	      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @measures.each do |measure| %>
+	      <tr>
+	        <td><%= link_to measure_display(measure.content), measure_path(measure) %></td>
+	        <td>
+	          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+	                      edit_measure_path(measure), :class => 'btn btn-mini' %>
+	          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+	                      measure_path(measure),
+	                      :method => :delete,
+	                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+	                      :class => 'btn btn-mini btn-danger' %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+<% end %>
 <%= link_to "Add", new_measure_path, id: "new_measure", remote: true, :class => "btn btn-info" %>

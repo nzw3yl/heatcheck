@@ -488,7 +488,8 @@ CREATE TABLE providers (
     issues_count integer DEFAULT 0 NOT NULL,
     plans_count integer DEFAULT 0 NOT NULL,
     contracts_count integer DEFAULT 0 NOT NULL,
-    creator_id integer
+    creator_id integer,
+    measures_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -578,7 +579,9 @@ CREATE TABLE users (
     confirmation_token character varying(255),
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying(255)
+    unconfirmed_email character varying(255),
+    memberships_count integer DEFAULT 0 NOT NULL,
+    invites_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1126,3 +1129,9 @@ INSERT INTO schema_migrations (version) VALUES ('20130719111929');
 INSERT INTO schema_migrations (version) VALUES ('20130720022146');
 
 INSERT INTO schema_migrations (version) VALUES ('20130720170145');
+
+INSERT INTO schema_migrations (version) VALUES ('20130805030559');
+
+INSERT INTO schema_migrations (version) VALUES ('20130805233650');
+
+INSERT INTO schema_migrations (version) VALUES ('20130815191821');

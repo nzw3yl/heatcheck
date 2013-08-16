@@ -1,21 +1,26 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h3>Edit your profile </h3>
 
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :email, :required => true, :autofocus => true %>
-
+	<div class="form-actions">
+	  <h4> Update Email Address</h4>
+      <%= f.input :email, :required => true, :autofocus => true, :label => false %>
+    </div>
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
-
-    <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
-    <%= f.input :password_confirmation, :required => false %>
-    <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
+    <div class="form-actions">
+	  <h4> Change Password</h4>
+      <%= f.input :password, :autocomplete => "off", :required => false, :placeholder => "new password", :label => false %>
+      <%= f.input :password_confirmation, :required => false, :placeholder => "confirm password", :label => false  %>
+    </div>
   </div>
 
   <div class="form-actions">
+	<h4>Save Changes</h4>
+    <%= f.input :current_password, :hint => " we need your current password to confirm your changes", :required => true, :placeholder => "*************", :label => false  %>
     <%= f.button :submit, "Update" %>
   </div>
 <% end %>
@@ -24,4 +29,3 @@
 
 <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
 
-<%= link_to "Back", :back %>

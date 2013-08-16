@@ -18,6 +18,10 @@
 	margin-left: 30px;
 }
 
+.provider-btn {
+  width: 100%
+}
+
 .nested_items .nested_items .nested_items .nested_items {
 	margin-left: 0;
 }
@@ -51,6 +55,9 @@ th.tight-measure {
 .hero-unit {
   text-align: center;
   vertical-align: middle;
+  background-image: url('cycling-summer-heat-hydration.jpg');
+  background-size: cover;
+  background-repeat:no-repeat;
 }
 
 .splash {

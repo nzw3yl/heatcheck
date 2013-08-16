@@ -5,6 +5,9 @@ class Ability
     user ||= User.new
     if user.has_role? :admin
       can :manage, :all
+    else
+      can :issues, Provider
+      can :plans, Provider
     end
     # Define abilities for the passed in user here. For example:
     #
